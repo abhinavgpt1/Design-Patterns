@@ -1,4 +1,4 @@
-public class TataFactory extends CarCompanyFactory {
+public class TataFactory extends ICarCompanyFactory {
 
     @Override
     public ICar getCar(CarType carType) {

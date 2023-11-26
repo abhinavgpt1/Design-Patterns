@@ -13,8 +13,10 @@ Parameterized create method. Factory is returned based on parameter
 Made with Composition, which was not there in factory pattern -> (key distinction btw factory and abstractFactory)
 The goal to not let the client know the implementation and not even to the abstractFactory. 
     Right factory and concrete classes should be deferred (based on params) and client should be provided with the functionality via interface (interface reference).
+Client only interacts with interfaces - be it abstractFactory or abstractProduct
+[GFG] "The client does not know or care which concrete objects it gets from each of these concrete factories since it uses only the generic interfaces of their products."
 
-Structure: abstractFactory -> factory -> product
+Structure: abstractFactory --creates--> factory --creates--> product (a sub-class of abstractProduct)
 ----------
 
 Another exmaple of abstract factory 
@@ -24,6 +26,9 @@ Another exmaple of abstract factory
 
 Another exmaple of abstract factory 
 -> [told in pluralsight] Say we have multiple DB connections - SQLServer, MySQL, Oracle and I want to execute queries (as string) using abstract function execute();
+
+Another exmaple of abstract factory 
+-> https://www.geeksforgeeks.org/abstract-factory-pattern/ - Car provider based on location as Mini, Luxury or Micro
 
 Pitfall
 -------
