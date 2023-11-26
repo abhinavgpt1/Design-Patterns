@@ -30,6 +30,12 @@ Another exmaple of abstract factory
 Another exmaple of abstract factory 
 -> https://www.geeksforgeeks.org/abstract-factory-pattern/ - Car provider based on location as Mini, Luxury or Micro
 
+[GFG] When to use
+    When the system must be independent in terms of how its objects are created, composed, and represented.
+    This constraint must be enforced when a family of related objects needs to be used together.
+    When you want to provide an object library that does not show implementations but only exposes interfaces.
+    When the system has to be configured with one of several families of objects.
+
 Pitfall
 -------
 Most complex design pattern to implement

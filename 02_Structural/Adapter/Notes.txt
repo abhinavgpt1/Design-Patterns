@@ -1,0 +1,49 @@
+Connects new code with legacy code without changing the contract produced by legacy code originally.
+Plug adapter example in real life doesn't describe this pattern accurately as there can be multiple adapters at a time.
+ -> The example: C type cable plugged into a small device having input as Ctype and output as B type which ultimately plugs into Btype Phone
+
+Concepts:
+---------
+When client wants to talk to an interface. This pattern comes into existence when some part of code/system is legacy that we don't want to or can't change
+It is effectively translating the request from client to the code we are adapting to.
+Eg. Collection API 
+    Arrays (legacy) --(to)--> List (collection Framework). THere are methods in collection api to adapt arrays to list
+    Streams - Almost all I/O streams can interact with other streams or readers.
+
+Design:
+-------
+Very much client centric. It helps integrate/adapt client to legacy components.
+Often implememted as an interface, but it isn't necessarily to be. Can be a class.
+Adaptee can be an implementation too.
+Just adapts i.e. converts from one form to another and not put additional functionality like Decorator
+
+Observation
+Generally adapter fits between interface and concrete class
+Adapter acts as a wrapper. Also, we create a wrapper per instance
+
+Pitfalls:
+---------
+Not a lot, just don't over cmoplicate them
+Typically an adapter will provide multiple adapters. But that doesn't mean that if we have 1 adapter then it isn't an example of adapter pattern.
+Adapter is used to make the things work together. If you are adding functionality to your legacy code in the adapter, then consider decorator or some other structural pattern.
+
+Adpater vs Bridge
+---------
+Adpater:
+1. Makes things work after they are designed.
+2. Deals with legacy code
+3. Retrofitted to make unrelated class work together
+4. Provides different interface to our legacy code than was originally intended
+
+Bridge:
+-------
+1. Designed upfront to let abstraction and implementation vary independently.
+2. It is build in advance so as to provide a layer of abstraction and let both the systems be flexible while we are implementing and creating them
+3. Both adapter and bridge are meant to adapt multiple disparate(unrelated) systems and work in concert with one another
+
+Summary:
+--------
+Simple soln. to very descript problem
+easy to implememt
+integrate with legacy we don't want opr can't change
+can provide multiple adapters. Devs generally implement one. Try using legacy apis to have multiple adapters.
