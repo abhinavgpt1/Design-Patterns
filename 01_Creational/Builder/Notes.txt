@@ -1,0 +1,53 @@
+Used oftenly but not created by own
+Its great for construction of objects with lot of parameters and we want to make it immutable once constructing it
+----------------------------------------------------------------
+Features:
+1. Handles complex constructors
+2. Large parameters
+3. Immutability
+eg StringBuilder
+----------------------------------------------------------------
+The creation of multiple constructors with each parameter variation is called telescoping constructor.
+def: telescope: slide or cause to slide into itself, so that it becomes smaller.
+
+Builder patten helps us solve it by handling with object than with parameters. 
+Builder is typically written with static inner class
+Negates the need for exposed setters
+----------------------------------------------------------------
+
+Both bean class and telescope class are not suitable to create immutable and customizable instance
+
+(not really)Pitfalls:
+1. Immutable class is generated everytime
+2. static inner class is used. It can cause issue when same builder is used again (can set stale data from previous use)-- see code.
+    2.1 INC would solve this problem, but the lines of code would increase + pattern would break 
+    2.2 You need to add no-arg constructor for construction of lunchOrder. 
+    2.3 Then again you would use this object to create builder to make actual lunchOrder which is against pattern. 
+    2.4 Not a hardbound code problem, but not clean coding
+3. Builder class objects are Designed first and not refactored like Prototype pattern
+4. Adds a little complexity in implementing the class than what could have been done with just a constructor but without nice features of builder patterns.
+    4.1 Additionally, we generally don't return references at the end of call -> so complexity of Builder increases
+----------------------------------------------------------------
+
+Builder vs Prototype
+--------------------
+Builder
+1. handles complex constructor
+2. no interface, but can be implemented with it
+3. can be implemented with separate class even though its typically implemented in the class it is building --!!>wording<!!--
+    3.1 Since it is implemented in separate class, it can be integrated with Legacy code without much change
+
+Prototype
+1. implemented around clone method
+2. avoids the need of calling complex constructor
+3. clone method is focused around member variables and constructor, hence it is implemented inside the class it is trying to clone --!!>wording<!!--
+4. difficult to implement in legacy code
+
+Both these are focused on complex constructors within the class. Both having different approach. Builder calls the constructor while Prototype avoids it
+------------------------------------------------
+
+Summary
+creative way to deal with complexity
+easy to implement
+very few drawbacks
+can refactor with separate class -> no need to make static class an inner class

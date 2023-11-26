@@ -1,0 +1,23 @@
+Singleton vs Factory
+--------------------
+Singleton
+-> returns same instance everytime
+-> one constructor method with no args -> private constructor, so no access to it
+-> no interface for returning custom objects
+-> tough to unit test
+-> not every class in application needs to be a singleton. Factory can also have adv.
+
+Factory
+-> returns various instances of various types
+-> has multi constructors
+-> interface driven -> we want to abstract out the backend and some things we are returning, hence we expose an interface with a Factory
+-> easy to unit test
+-> adaptable to env. while singleton is not
+
+Summary
+-------
+We use singleton when we want to guarantee one instance
+its easy to implement
+easy to thread safe 
+Helps us solve the problem of single instance, but is abused in apps
+Not everything needs to be singleton, and be aware of its difference with factory pattern

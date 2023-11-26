@@ -1,0 +1,47 @@
+Implemented as factory of factory.
+Not necessarily requires factory pattern, but it is called factory of related objects
+common interface concept taken to another level
+invloves subclass instantiation
+eg. DocumentBuilderFactory - java XML apis
+    Frameworks
+
+Design:
+-------
+Group of factories
+Has Common interface for factory instantiation
+Parameterized create method. Factory is returned based on parameter
+Made with Composition, which was not there in factory pattern -> (key distinction btw factory and abstractFactory)
+The goal to not let the client know the implementation and not even to the abstractFactory. 
+    Right factory and concrete classes should be deferred (based on params) and client should be provided with the functionality via interface (interface reference).
+
+Structure: abstractFactory -> factory -> product
+----------
+
+Another exmaple of abstract factory 
+-> [done in pluralsight] client provides me a credit card score. An based on that score I provide an Amex/Visa card. Now you may choose any among Gold or Platinum.
+-> 1. if creditScore > 650 you provide client with AmexFactory else VisaFactory named as CreditCardFactory
+-> 2. Now using getCreditCard function client may opt for GOLD/PLATINUM
+
+Another exmaple of abstract factory 
+-> [told in pluralsight] Say we have multiple DB connections - SQLServer, MySQL, Oracle and I want to execute queries (as string) using abstract function execute();
+
+Pitfall
+-------
+Most complex design pattern to implement
+Runtime switch - since, there's params involved one may be concerning that client knows about implementation in a way that what set of params will fetch me what results (.class)
+    It isn't an issue to worry as implementation logic is not exposed
+Pattern within pattern
+Solves a particular problem - grouping of factories
+Starts as factory and then refactored to AbstractFactory -> i.e. you implement all factories, once that's done collab them under abstractFactory
+
+Factory vs AbstractFactory
+--------------------------
+[F & AF] multiple/various instances with multiple constructors
+[F & AF] interface driven and adaptable to env.
+[AF] Implemented with a factory - 99% times although not necessary
+[AF] Hides underlying concrete factories
+[AF] Adds another layer of abstraction to env.
+[AF] Build through composition
+[AF] Heavly abstracts - interfaces, abstract classes(contracts) subclass, composition 
+[AF] Framework pattern, whereas other design patterns are solving a particular problem
+

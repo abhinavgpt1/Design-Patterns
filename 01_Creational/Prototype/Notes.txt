@@ -1,0 +1,49 @@
+Using a clone() to get a new instance of prototype object
+Features:
+1. Avoids costly creation unlike Singleton
+2. Avoids subclassing i.e. prototype object is used within class itself to create new instance
+3. dont use new keyword. First instance would require though
+4. utilizes interface
+5. Implemented with a registry. First object created is kept in registry. All new instances are created using this instance from registry
+
+If an object is expensive to create, but we can get a new insatnce by copying the member variables, then prototype patten is the way to go
+-> in a way "new" keyword is redefined
+
+Class contains clone and inherits Cloneable
+Avoid new
+clone creates a copy, although it will be unique instance
+Costly construction is not handled here. Opposite to Builder pattern
+Can use params during construction
+Designer can choose Shallow vs Deep copy
+
+Singleton creates and returns the same instance, wherease both Builder and prototype provide new instance where the way for instantiation may vary
+
+Pitfalls
+--------
+Sometimes not clear to people when to use, instead Singleton are misused
+Used with other patterns, here we used Registry
+Deep copy requires more work, hence people may overlook it with Shallow copy
+Defaults may exist for all instances we create as the original instance may be set with defaults. 
+    Also, we need to take care of sensitive info set under different instances 
+    -> can do deep copy or just set that sensitive info null and set after object instantiation
+
+Prototype vs Factory
+--------------------
+Prototype
+1. Light-weight construction
+2. Shallow or deep copy
+3. Copy of itself is created which is then customized by setters
+
+Factory
+1. flexible object creation based on request
+    1.1 Multiple constructors are used instead of clone
+2. It creates concrete and fresh instance by using new
+    2.1 There are no programmatical defaults in the instance (generally there aren't, but there's no restriction as well)
+
+Summary:
+--------
+We use it to guarantee unique instance everytime
+Often refactored later
+Helps in performance issues in app
+Avoid heavyweight creation of instances by new keyword and helps us gather the objects quickly
+Don't jump to factory as prototype may solve the problem easily

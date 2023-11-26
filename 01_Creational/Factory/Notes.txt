@@ -1,0 +1,53 @@
+2nd most used design pattern
+Opposite of singleton
+
+Concepts:
+1. does't expose instantiation logic. The client doesn't know about the type of object being created
+    1.1 It does so by deferring logic to the subclass
+    1.2 Client knows about the common interface that factory exposes
+2. Factory is specified by architecture but implemented by user 
+Examples;
+    Calenar
+    ResourceBundle
+    NumberFormat
+Factory can return different instances of different types unlike singleton
+
+Design:
+1. Factory is repsonsible of creating the object (not entirely the lifecycle, but yeah creation part)
+2. Factory exposes common interface to user. Behind the scenes it may refer to concrete class, but client doens't know that
+3. Parameterized create method. This parameter determines the concrete type
+4. Factory has a Factory method which helps provide an object based on parameter passed
+5. An abstract method in base class is used to instantiate all concrete class objects. Creation of objects is called in factory method only
+
+Example of unawareness to client - Calendar cal = Calendar.getInstance(); -> on printing we know its java.util.GregorianCalendar
+
+Observation-
+    Since the return type is of base class, the properties of concrete class  will be hidden 
+    -> hence this design pattern is only for fields of base class
+
+Pitfalls
+---------
+1. Complex code and moving parts as compared to other deisgn patterns
+2. Devs fail to understand that creation doesn't take place in factory itself but rather IN THE SUBCLASS OF THE TYPE WE ARE CREATING
+3. Objects created are not refactored unlike Prototype. It is decided at implementation itself.
+
+singleton vs factory
+--------------------
+singleton - 
+1. returns 1 instances
+2. 1 constructor with no args
+3. no interface no subclass
+
+factory - 
+1. returns various instances and can have multiple constructors with params
+2. It is interface / abstract class aka CONTRACT DRIVEN implementation (i.e. why there's no point in mentioning concrete class fields)
+3. subclasses are invloved
+4. adaptable to env. A lot of frameworks are written as factory pattern where they are implemented per env. as we want to use them
+
+Summary:
+-------
+1. Param driven
+2. solves complex creation. Builder too does it. 
+    Builder too supports contract (recall, the builder constructor can have params) but doesn't invlove multiple types creation
+3. A little complex and opposie of singleton. If singleton doesn't seem fit to you, try thinking problem as factory
+
