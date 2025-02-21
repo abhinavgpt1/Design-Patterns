@@ -1,3 +1,8 @@
+Singleton
+) EagerlyLoaded
+ > ) LazyLoaded
+  > ) ThreadSafe
+
 Singleton vs Factory
 --------------------
 Singleton

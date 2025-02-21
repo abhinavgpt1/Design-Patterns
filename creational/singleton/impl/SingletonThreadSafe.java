@@ -2,8 +2,7 @@ class DbSingleton
 {
     private static volatile DbSingleton dbSingleton = null;
     // It ensures that the variable is always read from and written to the main memory,
-    // rather than from thread-specific caches, ensuring visibility across
-    // threads
+    // rather than from thread-specific caches, ensuring visibility across threads
 
     private DbSingleton() throws RuntimeException{
         // java reflection API can be used to bypass private constructor to instantiate this class
