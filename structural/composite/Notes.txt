@@ -1,0 +1,51 @@
+https://www.digitalocean.com/community/tutorials/composite-design-pattern-in-java
+
+> 
+Its not composition(has-a relationship)
+
+>
+Used when a tree like structure forms
+This pattern is meant to treate the components the same, be it the item or the whole structure.
+Same operations work on individual and composites
+eg. java.awt.components, Restful web services GETs
+
+>
+Tree structured
+The root of the tree starts with a component which is either a leaf or composite of objects (in short a composite)
+Difference in leaf and composite is that leaf has operations. Composite has same operations, but knows about its child components as well
+UML comprises of leaf, composite and component
+Composite can delegate work to leaf. Leaf are the ones doing work
+
+> UML
+The component class is the abstraction for all components (leaf, composites)
+It declares the interface for objects in the composition
+The component has methods which both leaf and composites implement. Composite consists of additional operations to manipulate child objects.
+Composite implements the component's methods but typically the functionality to its children
+eg. Map in java.util
+Map of <String, String> combining all other map key-pairs is way of "composing" objects in one and treating as one
+
+>
+We can enforce contract rules to component, leaf and composite.
+Some operations are make sense in composite but not in child(leaf) eg. addition/removal of leaf nodes in Leaf class
+Also, addition/removal operations by an object of component. Such operation should be restricted to composite only.
+
+> Pitfalls
+It oversimplifies things. It is a problem since, it becomes difficult to restrict in thus formed hierarchical structure
+Everything is treated the same which is the intent of this pattern, but then we need to rely on runtime checks for restrictions rather than compile time safety
+Implementation can be costly in case of large composites or if implemented incorrectly.
+
+> vs Decorator
+tree structure
+Leaf and composite same interface
+provides unity between objects
+
+Decorator contains another entity
+It is like composition which Composite pattern wasn't like
+In decorator, contained entity's behaviour is modified - this is usually like "adding" functionality to entity which is didn't have originally
+It decorates the underlying entity but not necessarily change it
+
+>
+Composite generalises the hierarchical structure
+Can simplify things too much such that we need to rely on runtime checks
+Easier for clients
+Composite != Composition. Composite deals with hierarchical structure whereas the composition is an object containing another object

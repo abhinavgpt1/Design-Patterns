@@ -1,0 +1,17 @@
+Optimization pattern
+used to fit more objects in RAM
+Applicable when there are large number of similar objects (immutable) -> so instead of storing new instance for every occurence, we store a reference to a unique object
+eg. java.lang.String (string literal pool), Integer.valueOf() function and other wrapper classes (Char, Boolean, Short)
+
+Extrinsic and intrinsic property of objects - ext. = which are non common i.e. which distinguishes objects. int. = opposite of ext.
+Intrinsic properties are common eg. bullets in gun, samsung WH-CH710N headphones in shopping orders
+
+Caching is a hint to usage of flyweight
+Pattern of patterns -> utilizes a factory to retrieve flyweight objects after they've been created => emcompasses creational pattern inside structural pattern
+
+Pitfalls
+--------
+bit complicated and moving pieces
+premature Optimization i.e. optimziation not needed sometimes but you do
+must understand factory (identify factory vs flyweight objects)
+not a graphical pattern

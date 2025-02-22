@@ -1,0 +1,26 @@
+>
+Also a hierarchical type pattern which builds functionality at each level while using composition using similar data types
+
+>
+When you want to wrap another object to add functionality to it.
+Can add behavior without affecting others
+It is more than simple inheritance though.
+Follows Single Responsibility Principle
+Can compose behavior dynamically by using one of the subclasses that decorate the object. It feels liek creational pattern but it isn't as it is adding behavior through creation so its a structural dp
+eg. java.io.InputStream
+
+> Design
+inheritance based
+utilizes both composition and inheritance (is-a, has-a)
+Alternative to subclassing
+Constructor requires an instance from the hierarchy  which enables to build upon that which helps use composition than inheritance to override which individual fields that it wants to.
+
+>
+New class for every feature added
+Decorator enables us to not need to extend the concrete object but rather implement a new decorator itself
+The side effect of this is that you end with a lot of little specialized objects
+Often confused with simple inheritance
+
+
+https://refactoring.guru/design-patterns/decorator
+> It is tough to remove the decorations in between

@@ -1,0 +1,11 @@
+/fəˈsɑːd/
+
+>
+Makes API easy to use
+Often we see facade in action in which poorly designed API is wrapped around a facade to hide details from the client
+Helps reduce dependency on outside code
+Simplifies client usage and code
+Typically a refactoring pattern (for complex or poorly designed APIs)
+java.net.URL
+....
+for rest checkout gfg/refactoring guru

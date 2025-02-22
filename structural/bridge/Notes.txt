@@ -1,0 +1,21 @@
+Works with new code whereas Adapter works with legacy code.
+
+Bridge pattern decouples abstraction and Implementation
+Concepts used in this are encapsulation, composition and inheritance
+Mainly advantage in this pattern is that changes in abstraction (interface) will not client, since the client interacts with the Implementation of interface
+eg. Drivers, JDBC
+
+Emphasis more on composition than inheritance. It is more than composition since application is expected to change from both sides.
+
+In JDBC exmaple, the driver acts as a bridge, since you can pass any connection string and driver to the same DriverManager.registerDriver() method to connect to MySQL, Postgres, SQLServer, H2, etc.
+-> The client doesn't have to change unless the table and data changes
+
+Another exmaple:
+Say you have a printer which can print - movie, images, etc. Also you have multiple formats in which you want to see this - HTML, XML, JSON
+-> so you can create 2 separate interfaces
+
+<<Formatter>>: HTMLFormatter, JSONFormatter, etc.
+<<Media>> : Movie, Image, Etc.
+<<Printer>> : 
+    - Media
+    + print(Formatter) - this calls formatter.format and returns output

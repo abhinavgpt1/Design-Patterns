@@ -1,0 +1,37 @@
+refactoring guru / gfg
+Binary Symphony - https://www.youtube.com/watch?v=-GJu0zxwOA4&list=PLn05u4nMKcB_QzKVeALuCiTyJIFGKyfkg&index=8
+>
+Proxy is a structural design pattern that lets you provide a substitute or placeholder for another object to control access to it.
+A proxy controls access to the original object, allowing you to perform something either before or after the request gets through to the original object.
+
+Say, the operation/object initialization is very expensive. Then the client is given the objet wrapped in
+proxy so as to limit the expensive operation in case of invalid inputs thus saving resources.
+
+> PLuralsight
+When you want to wrap a class because of: 
+* add functionality
+* solve security, simplicity, remote service call, save cost by wrapping by proxy by showing loading msg until work done
+
+Proxy called to access real object
+eg. java.lang.reflect.Proxy -> was created to facilitate creation of proxy based on this pattern
+eg. java.rmi.* -> remote method invocation (accessing remote objects and retrieving them)
+
+Interface based pattern
+
+Good example with InvocationHandler and reflect.Proxy
+
+Pitfalls
+> Can have only one proxy. Say, you want to have both auditing and security for an object as proxy, you can't have both separately. Can't chain proxy
+> Adds abstraction layer -> can add complication when you're accessing something local which infact is remote -> you may get errors
+> similar to other patterns -> puts confusion with other patterns like decorator
+
+> Always an instance of proxy is created. whatever may go behind i.e. new instance of real object may not come in picture.
+
+vs decorator
+-------------
+Proxy's main purpose is not to add functionality whereas decorator has it
+Proxy can be one, but decorators can be many. decorators can be chained too
+Proxy is determined at compile time whereas decorator is determined as runtime
+
+Used a lot in dependency injection and inversion of control framework (Spring & Juice)
+Great way to implement lazy loading, caching and security all at once. (Lazy loading is the initialization when required. recall lazy loading in singleton)
