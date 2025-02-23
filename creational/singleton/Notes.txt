@@ -1,7 +1,7 @@
 Singleton
-) EagerlyLoaded
+> ) EagerlyLoaded
  > ) LazyLoaded
-  > ) ThreadSafe
+  > ) ThreadSafe in LazyLoaded
 
 Singleton vs Factory
 --------------------
@@ -9,7 +9,8 @@ Singleton
 -> returns same instance everytime
 -> one constructor method with no args -> private constructor, so no access to it
 -> no interface for returning custom objects
--> tough to unit test
+-> (gfg) Singletons can make unit testing difficult since they introduce a global state. This can complicate testing components that depend on a Singleton, as its state can influence the test results.
+-> (gfg) The Singleton pattern creates a global dependency, which can complicate replacing the Singleton with a different implementation or using dependency injection.
 -> not every class in application needs to be a singleton. Factory can also have adv.
 
 Factory
@@ -26,3 +27,13 @@ its easy to implement
 easy to thread safe 
 Helps us solve the problem of single instance, but is abused in apps
 Not everything needs to be singleton, and be aware of its difference with factory pattern
+Helpful in memory utilization
+
+Things to take care while implementing this DP
+* static instance
+* volatile instance
+* reflectionAPI problem
+* static synchronization
+
+Note:
+Cleaner solution with inner class (class loads once in lifetime) - https://www.geeksforgeeks.org/singleton-design-pattern/#:~:text=Instantiation%20through%20inner%20class

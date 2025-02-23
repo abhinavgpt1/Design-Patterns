@@ -23,6 +23,9 @@ public class SingletonLazyLoaded {
         DbSingleton singleton2 = DbSingleton.getInstance();
         System.out.println(singleton2);
         System.out.println(singleton1 == singleton2);
+        System.out.println(singleton1.hashCode() == singleton2.hashCode());
+        // hashcode != memory address
+        // https://stackoverflow.com/questions/16418713/does-hashcode-number-represent-the-memory-address
     }
 }
 /*

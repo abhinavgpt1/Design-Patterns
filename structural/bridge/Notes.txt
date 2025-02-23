@@ -19,3 +19,18 @@ Say you have a printer which can print - movie, images, etc. Also you have multi
 <<Printer>> : 
     - Media
     + print(Formatter) - this calls formatter.format and returns output
+
+Pitfalls:
+1. increases complexity
+2. can be difficult to plan...since we're breaking code into interfaces, and this should be well thought
+3. can be confusing on what goes where since there's a lot of abstraction on both sides
+
+Comparison with other patterns:
+w.r.t. Adapter
+1. bridge is designed upfront i.e. built in advance consciously
+2. more complex
+3. breaks functionality into pieces (so that it works independently of one another) whereas in Adapter, we don't any functionality.
+
+Adapter, works after the code is designed. Intended to work with legacy applications i.e. we tie something with legacy application using Adapter akak retrofitted
+
+Summary: bridge gives flexibility although it may be complex to implement
