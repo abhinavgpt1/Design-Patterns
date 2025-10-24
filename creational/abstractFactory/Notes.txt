@@ -20,7 +20,7 @@ Structure: abstractFactory --creates--> factory --creates--> product (a sub-clas
 ----------
 
 Another exmaple of abstract factory 
--> [done in pluralsight] client provides me a credit card score. An based on that score I provide an Amex/Visa card. Now you may choose any among Gold or Platinum.
+-> [done in pluralsight] client provides me a credit card score. And based on that score I provide an Amex/Visa card. Now you may choose any among Gold or Platinum.
 -> 1. if creditScore > 650 you provide client with AmexFactory else VisaFactory named as CreditCardFactory
 -> 2. Now using getCreditCard function client may opt for GOLD/PLATINUM
 

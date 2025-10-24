@@ -8,7 +8,6 @@ Features:
 eg StringBuilder
 ----------------------------------------------------------------
 The creation of multiple constructors with each parameter variation is called telescoping constructor.
-def: telescope: slide or cause to slide into itself, so that it becomes smaller.
 
 Builder patten helps us solve it by handling with object than with parameters. 
 Builder is typically written with static inner class

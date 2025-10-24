@@ -23,3 +23,27 @@ public class BuilderDemo {
         lunchOrder4.print();
     }
 }
+/**
+ * Your order:
+ * --------------------
+ * Bread: Wheat
+ * Patty: Aloo
+ * Sauce: Tomato
+ * --------------------
+ * Your order:
+ * --------------------
+ * Patty: Chicken
+ * Sauce: Mustard
+ * --------------------
+ * Your order:
+ * --------------------
+ * Bread: wheat
+ * Patty: Chicken
+ * --------------------
+ * Your order:
+ * --------------------
+ * Bread: Garlic
+ * Patty: Chicken <-wrong
+ * Sauce: Imli
+ * --------------------
+ */

@@ -2,7 +2,7 @@
 Opposite of singleton
 
 Concepts:
-1. does't expose instantiation logic. The client doesn't know about the type of object being created
+1. doesn't expose instantiation logic. The client doesn't know about the type of object being created
     1.1 It does so by deferring logic to the subclass
     1.2 Client knows about the common interface that factory exposes
 2. Factory is specified by architecture but implemented by user 
@@ -27,7 +27,7 @@ Observation-
 
 Pitfalls
 ---------
-1. Complex code and moving parts as compared to other deisgn patterns
+1. Complex code and moving parts as compared to other design patterns
 2. Devs fail to understand that creation doesn't take place in factory itself but rather IN THE SUBCLASS OF THE TYPE WE ARE CREATING
 3. Objects created are not refactored unlike Prototype. It is decided at implementation itself.
 
@@ -48,6 +48,5 @@ Summary:
 -------
 1. Param driven
 2. solves complex creation. Builder too does it. 
-    Builder too supports contract (recall, the builder constructor can have params) but doesn't invlove multiple types creation
-3. A little complex and opposie of singleton. If singleton doesn't seem fit to you, try thinking problem as factory
-
+    Builder too supports contract (recall, the builder constructor can have params) but doesn't involve multiple types creation
+3. A little complex and opposite of singleton. If singleton doesn't seem fit to you, try thinking problem as factory.
