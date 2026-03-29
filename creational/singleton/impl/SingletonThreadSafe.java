@@ -1,3 +1,10 @@
+// Note: This code is still vulnerable. Attacker can use reflection and set dbSingleton to null, enabling constructor to work.
+// Soln: use enum for DbSingleton. Reflection doesn't work for enum. It throws IllegalArgumentException for new enum()
+
+// In case of additional field, say private Connection connection, code remains same expect you add intialisation of connection inside synchronized block with monitor on DbSingleton.class
+// FYI, reflection can still be used to convert accessibility of private connection field to public. Soln: Eagerly loading with private final connection field. Modern JVM doesn't let accessibility of static final fields to be changed.
+
+// Note: Reflection is an internal attack vector, not an external exploit. If a hacker has already managed to inject and execute custom Java reflection code inside your running application, they don't need to steal your Connection object.
 class DbSingleton
 {
     private static volatile DbSingleton dbSingleton = null;
@@ -6,7 +13,7 @@ class DbSingleton
     // https://www.geeksforgeeks.org/volatile-keyword-in-java/#:~:text=Volatile%20variables%20have%20the%20visibility%20features%20of%20synchronized%20but%20not%20the%20atomicity%20features.%20The%20values%20of%20the%20volatile%20variable%20will%20never%20be%20cached%20and%20all%20writes%20and%20reads%20will%20be%20done%20to%20and%20from%20the%20main%20memory
 
     private DbSingleton() throws RuntimeException{
-        // java reflection API can be used to bypass private constructor to instantiate this class
+        // Java Reflection API can be used to bypass private property of this constructor during instantiation.
         if (dbSingleton != null) {
             throw new RuntimeException("Use getInstance() for getting object");
         }
