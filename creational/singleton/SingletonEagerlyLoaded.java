@@ -1,10 +1,13 @@
+// Thread-safe
 class DbSingleton {
-    // can make this instance final
-    private static DbSingleton dbSingleton = new DbSingleton(); // eagerly loaded -> whether or not we require this in
-                                                                // our application, object gets created
+    // Eagerly loaded -> whether or not we require this in our application, object gets created
+    private static DbSingleton dbSingleton = new DbSingleton(); // Can make this instance final
 
     private DbSingleton() {
-        // missing reflectionAPI check i.e. if(instance != null) { throw new IllegalStateException("Singleton instance already exists"); }
+        // missing reflectionAPI check i.e. 
+        // if(instance != null) { 
+        // throw new IllegalStateException("Singleton instance already exists"); 
+        // }
     }
 
     public static DbSingleton getInstance() { // static imp.
