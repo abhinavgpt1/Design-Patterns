@@ -7,6 +7,7 @@ public abstract class Item implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
         // 1. Since Cloneable interface is from Java 1.0, we can't use custom class or generics. So return Object and later typecast it.
         // 2. It's Shallow copy for now, can implement deep copy too if necessary.
+        // 3. This clone method can be overridden in respective sub-classes. Hence, using interface in Prototype pattern is beneficial.
         return super.clone();
     }
 

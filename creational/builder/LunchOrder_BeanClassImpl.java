@@ -1,10 +1,12 @@
-// Just a bean class
-public class LunchOrderExposedSetters {
+/**
+ * Bean class: high flexibility because of setters, but is not immutable.
+ */
+public class LunchOrder_BeanClassImpl {
     private String bread;
     private String patty;
     private String sauce;
 
-    // default constructor
+    // <Default constructor>
 
     public String getBread() {
         return bread;
@@ -30,7 +32,3 @@ public class LunchOrderExposedSetters {
         this.sauce = sauce;
     }
 }
-
-/*
- * Has high flexibility on setting the params of lunchOrder, but is not immutable
- */

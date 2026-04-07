@@ -10,7 +10,7 @@ Uses a `clone()` method to get a new instance of a prototype object.
 1. **Avoid Costly Creation**: Avoids expensive object creation (unlike the need for a Singleton)
 2. **No Subclassing**: i.e. the prototype object is used within the class itself to create new instances
 3. **Avoid `new` Keyword**: Don't use the `new` keyword (the first instance still requires it)
-4. **Interface-Based**: Using interface ensures that the objects created adhere to consistent shape and contract.
+4. **Interface-Based**: Clone() is declared/defined in an interface / abstract class, eg. Item.java. Also, using an interface during Registry ensures that the objects created adhere to consistent shape and contract.
 5. **Registry Pattern**: Implemented with a registry; the first created object is kept in the registry, and all new instances are created using this instance from registry via cloning
 
 ## When to Use
