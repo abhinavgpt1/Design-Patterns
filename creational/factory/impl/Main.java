@@ -1,5 +1,5 @@
-// Also, checkout - https://www.tutorialspoint.com/design_pattern/factory_pattern.htm
-public class FactoryDemo {
+// Checkout: https://www.tutorialspoint.com/design_pattern/factory_pattern.htm
+public class Main {
     public static void main(String[] args) {
         Car nexon = CarFactory.getCar(CarCompany.TATA);
         Car cClass = CarFactory.getCar(CarCompany.MERCEDES);
