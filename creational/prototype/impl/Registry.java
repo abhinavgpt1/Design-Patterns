@@ -3,25 +3,29 @@ import java.util.Map;
 
 public class Registry {
     private Map<String, Item> itemDefaultMap = new HashMap<String, Item>();
-    public Registry(){
+
+    public Registry() {
         createDefaultItems();
     }
-    private void createDefaultItems(){
+
+    private void createDefaultItems() {
         Movie movie = new Movie();
-        //default param for all upcoming instances of movie. can be changed too. Also, rest are type defaults
+
+        // Default URL param for all movie instances. Can be changed individually using setter. Rest fields will have default values unless set.
         movie.setUrl("https://domain.com/movies");
-        itemDefaultMap.put("Movie", movie); // can use enums
+        itemDefaultMap.put("Movie", movie); // can use enums. FYI, classes can't extend enum. So, none among Item, Book, Movie can be an enum. You need to create a separate enum class for this.
 
         Book book = new Book();
         book.setUrl("https://domain.com/books");
         itemDefaultMap.put("Book", book);
     }
-    public Item createItem(String type){
+
+    public Item createItem(String type) {
         Item item = null;
         try {
-            //have put try-catch as clone method throws an exception
-            item = (Item)(itemDefaultMap.get(type)).clone();
-        } catch (CloneNotSupportedException ex){
+            // have put try-catch as clone method throws an exception
+            item = (Item) (itemDefaultMap.get(type)).clone();
+        } catch (CloneNotSupportedException ex) {
             ex.printStackTrace();
         }
         return item;
