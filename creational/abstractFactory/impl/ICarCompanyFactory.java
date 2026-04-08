@@ -1,4 +1,5 @@
 public abstract class ICarCompanyFactory {
+    // Both the methods below should be public since Main / Client uses them
     public static ICarCompanyFactory getCarFactory(CarCompany carCompany) {
         switch (carCompany) {
             case MERCEDES: {
@@ -8,13 +9,11 @@ public abstract class ICarCompanyFactory {
                 return new TataFactory();
             }
             default: {
+                System.out.println("Factory not found for this car company: " + carCompany);
                 return null;
             }
         }
     }
 
-    // need to be public (if in main class reference type of object is ICarCompanyFactory and main class exists outside package (generally yes)).
-    // Say these functions are protected, then due to object slicing it won't be visible outside package even if overridding function is public.
-    // At the moment protected will work as AbstractFactoryDemo.java is in same package
-    public abstract ICar getCar(CarType carType); 
+    public abstract ICar getCar(CarType carType);
 }

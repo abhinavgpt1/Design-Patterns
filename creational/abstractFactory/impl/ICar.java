@@ -22,5 +22,14 @@ public abstract class ICar {
         createCar();
     }
     
+    // crux of factory pattern - abstract method for object creation.
     public abstract void createCar();
+
+    public void printCarDetails() {
+        System.out.println("Car details:");
+        System.out.println("Company: " + this.getCompany());
+        System.out.println("Country Code: " + this.getCountryCode());
+        System.out.println("Name: " + this.getName());
+        System.out.println("Number of seats: " + this.getNumSeats());
+    }
 }
