@@ -1,12 +1,12 @@
 import java.util.List;
 
-public class AdapterDemo {
+public class Main {
     public static void main(String[] args) {
         EmployeeClient employeeClient = new EmployeeClient();
         List<IEmployee> listEmployees = employeeClient.getAllEmployees();
-        for(IEmployee employee: listEmployees)
+        for (IEmployee employee : listEmployees)
             System.out.println(employee);
-    }    
+    }
 }
 /*
  * Output:

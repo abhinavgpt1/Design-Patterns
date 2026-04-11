@@ -10,7 +10,7 @@ public class EmployeeLDAP {
         this.lastName = lastName;
         this.workEmail = workEmail;
     }
-    
+
     // Getters
     public String getWorkId() {
         return workId;
@@ -27,8 +27,4 @@ public class EmployeeLDAP {
     public String getWorkEmail() {
         return workEmail;
     }
-
-    // Getters
-    
-
 }
