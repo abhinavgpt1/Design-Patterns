@@ -13,5 +13,4 @@ public class Circle extends Shape {
     public void drawShape() {
         System.out.println("Drawing Circle with color: " + color.getColor());
     }
-    
 }
