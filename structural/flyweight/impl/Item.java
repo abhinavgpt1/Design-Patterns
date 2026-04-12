@@ -1,8 +1,9 @@
-//immutable object -> private final property (no setters, no manipulating functions)
-//acts as flyweight (as it got light)
+// Immutable inventory item. Contains private final property, no setters, no manipulating functions.
+// Acts as flyweight since instantiation isn't needed more than once (as per our use case).
 public class Item {
     private final String name;
-    Item(String name) {
+
+    public Item(String name) {
         this.name = name;
     }
 

@@ -1,23 +1,24 @@
-//acts as factory (pattern) -> since it provides Item.class (flyweight) objects based on type of item
-//can use enum for types
 
+// Acts as factory pattern, since it provides flyweight Item based on product name (Can use enum for item names)
 import java.util.HashMap;
 import java.util.Map;
 
 public class AmazonCatalog {
-    private Map<String, Item> cacheItems = new HashMap<>();
+    private Map<String, Item> catalog = new HashMap<>();
 
-    //lookup method aka factory method
+    // Lookup aka factory
     public Item lookupItem(String itemName) {
-        if(cacheItems.containsKey(itemName))
-            return cacheItems.get(itemName);
-        cacheItems.put(itemName, new Item(itemName));
-        return cacheItems.get(itemName);
-    }
-    public int getCatalogSize() {
-        return cacheItems.size();
+        if (catalog.containsKey(itemName))
+            return catalog.get(itemName);
+        catalog.put(itemName, new Item(itemName));
+        return catalog.get(itemName);
     }
 
+    public int getCatalogSize() {
+        return catalog.size();
+    }
+
+    // Redundant: Causes memory and performance issues due to creation of new instance.
     public Item getNewItem(String itemName) {
         return new Item(itemName);
     }

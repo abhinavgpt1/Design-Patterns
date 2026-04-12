@@ -1,6 +1,6 @@
 public class Order {
     private int orderNumber;
-    private Item item; // assuming single order has single item
+    private Item item; // assuming single order has single item for sake of example. Can be a List.
 
     public Order(int orderNumber, Item item) {
         this.orderNumber = orderNumber;
