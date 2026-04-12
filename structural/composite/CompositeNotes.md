@@ -1,6 +1,8 @@
 ## Composite Pattern
 - Def: The Composite Pattern is a structural design pattern that organizes objects into tree structures, enabling clients to treat individual and composite objects uniformly through a common interface.
 
+#### Ref: https://www.digitalocean.com/community/tutorials/composite-design-pattern-in-java
+
 ### Overview
 Used when a tree-like structure forms. This pattern is designed to treat individual components and groups of components (composites) the same way. The same operations work on individual items and collections.
 
