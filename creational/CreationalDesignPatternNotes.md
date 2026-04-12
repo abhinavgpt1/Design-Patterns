@@ -1,6 +1,5 @@
 # Creational Design Patterns
-
-Creational design patterns focus on object creation, providing flexibility in what, who, and how objects are created while hiding class details and instantiation processes.
+- Def: Creational design patterns focus on object creation, providing flexibility in what, who, and how objects are created while hiding class details and instantiation processes.
 
 There are 5 creational design patterns in total:
 
