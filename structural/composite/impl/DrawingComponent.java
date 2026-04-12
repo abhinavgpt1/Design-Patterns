@@ -1,19 +1,21 @@
 public abstract class DrawingComponent {
-    String componentName;
-    public String getComponentName() {
-        return componentName;
-    }
-    public void draw(String color){}
+    protected String componentName;
+    protected String color;
 
-    // Not really necessary, but adds a contract layer
-    // These functions are added here to restrict operations at this level 
-    // (i.e. by ref of DrawingComponent or classes implementing it unless they override these methods eg. Drawing.java but not DrawingItem.java), 
-    // Operations like these are not fine for leaf nodes like DrawingItem, hence it shouldn't be overrided/implemented in it
+    // Avoid passing String color in this function to avoid single color drawing.
+    public void draw() {
+    }
+
+    // add/remove are added here so that client code can treat every node as a DrawingComponent (same type for leaves and containers). 
+    // That is the usual Composite trade-off: one interface for the whole tree, even though only composites actually hold children.
+    //
+    // Leaf types (eg. Shape) should not implement these, as they cannot contain other components.
+    // Hence they keep these defaults defintion and throw exception if called.
     public void add(DrawingComponent drawingComponent) {
         throw new UnsupportedOperationException("Adding item isn't allowed like this");
     }
+
     public void remove(DrawingComponent drawingComponent) {
         throw new UnsupportedOperationException("Adding item isn't allowed like this");
     }
-
 }
