@@ -1,0 +1,3 @@
+interface ISandwich {
+    void make();
+}

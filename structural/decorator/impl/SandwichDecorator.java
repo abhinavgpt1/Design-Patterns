@@ -1,13 +1,13 @@
-public abstract class SandwichDecorator implements Sandwich {
+public abstract class SandwichDecorator implements ISandwich {
 
-    protected Sandwich customSandwich;
-    public SandwichDecorator(Sandwich customSandwich) {
-        this.customSandwich = customSandwich;
+    protected ISandwich sandwich;
+
+    public SandwichDecorator(ISandwich sandwich) {
+        this.sandwich = sandwich;
     }
 
     @Override
-    public String make() {
-        return customSandwich.make();
+    public void make() {
+        sandwich.make();
     }
-    
 }

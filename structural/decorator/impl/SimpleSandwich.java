@@ -1,7 +1,7 @@
-public class SimpleSandwich implements Sandwich {
+public class SimpleSandwich implements ISandwich {
 
     @Override
-    public String make() {
-        return "Sandwich containing mayo, cabbage and bread\n";
-    }   
+    public void make() {
+        System.out.println("Simple coleslaw sandwich");
+    }
 }
