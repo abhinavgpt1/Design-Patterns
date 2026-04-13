@@ -1,6 +1,6 @@
 public abstract class Shape {
-    // protected (and not private/PLA) so that it can be accessed by subclasses
-    protected Color color;
+    // -------------This is the bridge-------------
+    protected Color color; // protected (and not private/PLA) so that it can be accessed by subclasses if it was in another package.
 
     public Shape(Color color) {
         this.color = color;

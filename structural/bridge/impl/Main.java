@@ -1,12 +1,11 @@
 /**
  * Problem statement:
- * Say, we have Shape interface, Square and Circle extend Shape.
- * We want to create BlueCircle, BlueSquare, GreenCircle, GreenSquare, etc.
- * How to proceed? Should we create concrete classes? What if in future there is
- * a demand for RedTriangle?
+ * Say, we have Shape interface. Square and Circle are abstract classes which extend Shape. We create concrete classes BlueCircle, BlueSquare, GreenCircle, GreenSquare, etc.
+ * How do we refactor it so as to accomodate more shapes and colors? eg. RedTriangle
  * 
- * Solution: Separate Shape and Cicle as two different hierarchies/interfaces.
+ * Solution: Separate Shape and Color as two independent hierarchies.
  * Composition (of color) aka "has-a" relationship is the key here not inheritance.
+ * "Prefer composition over inheritance" --a wise man
  * 
  * qq: Why isn't Shape an interface like Color? Weren't we supposed to make 2 interfaces in bridge pattern?
  * ans: We need instance-specific color for every shape. Having Shape as interface will have following disavdantages:
@@ -31,6 +30,8 @@ public class Main {
         Shape blueSquare = new Square(blue);
         blueSquare.applyColor();
         blueSquare.drawShape();
+
+        // Note: Bridge is the reference from Shape to Color (eg. Inside Shape class, color property)
     }
 }
 /**
