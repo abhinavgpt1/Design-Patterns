@@ -1,3 +1,3 @@
-public interface Command {
+interface Command {
     void execute();
 }
