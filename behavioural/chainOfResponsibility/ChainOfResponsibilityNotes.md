@@ -1,59 +1,74 @@
-Decouples a request from a handling object in a chain of handlers until it is finally recognized.
+## Chain of Responsibility Pattern
+- Def: Chain of Responsibility is a behavioral design pattern that lets you pass requests along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.
 
-Concepts:
-* Decouples sender and receiver - Oftentimes in an application, we want to pass a request to a receiving object without knowing who the sender was and vice versa. The sender shouldn't have to know who the receiver was in order for it to process that request.
-* When using the chain, the receiver should also contain a reference to the next receiver or the successor.
-* One of the main reasons for choosing this pattern is to promote loose coupling. We can modify the chain and add links to the chain without rewriting large portions of the logic in the application.
-* It should also be okay that there may not be a handler for a given request and that the application will just continue on.
 
-eg.java.util.logging.Logger API, servlet.Filter, Spring Security API.
+### Overview
+The Chain of Responsibility pattern allows passing requests along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain. This promotes loose coupling between the sender and receiver of requests.
 
-Design:
-The design of the chain of responsibility has a chain of receiver objects. This can be implemented in a number of ways, but some basic form of a list is typically the most common. Each handler is based off of a main interface that defines the contract between each chain link. There is a concreteHandler for each receiver or implementation that will interpret a request. In building the chain, each handler has a reference to its successor or the next link in the chain. The pieces of the UML diagrams are a Handler and a ConcreteHandler and then a successor. 
+#### Note: In the classic Chain of Responsibility, a request is typically handled by exactly one handler. But that’s a convention, not a rule.
 
-Implementation:
-Beauty is that handling goes till the end of the chain, and you can set the handler to start from any node.
-It's actually quite efficient because it only will go down the chain as far as it needs to go. And it's less code overall, especially if you have a lot of scenarios. So I really like the loose coupling of the chain of responsibility. 
-And I like how the business logic of the code is contained exactly where it needs to be and not scattered throughout your application. 
-So nowhere else inside your application needs to know about who's approving what or what pieces are doing, what they're supposed to be doing.
+### Core Features
 
-Pitfalls:
-* handler or handling guarantee. We aren't guaranteed that someone along the chain will, in fact, handle our request.
-* runtime configuration. We have great flexibility with this configuration, but it can mean that there are some configurations that haven't been tested and something might actually not get processed.
-* If you just keep tacking on handlers, it can get quite large and the performance could start to degrade.
-* potential memory leak because you haven't tested all of the scenarios of that chain. And this goes back to the chain length or performance risks. You need to make sure you understand everything that you're building in your chain configuration and know that all of those paths are executed and tested appropriately.
+1. **Decoupling of Sender and Receiver**: The sender doesn't need to know which object will handle the request, and the receiver doesn't need to know who the sender was.
+2. **Successor Reference**: Each handler contains a reference to the next receiver or successor in the chain.
+3. **Loose Coupling**: Modifies the chain and adds links without rewriting large portions of the application logic.
+4. **No Handling Guarantee**: It's acceptable if no handler processes a given request; the application continues normally.
+5. **Hierarchical Processing**: Requests are processed hierarchically as they move down the chain.
 
-Comparison:
-Chain of Responsibility
-* Has a chain of handlers.
-* Each handler is unique and knows its next handler.
-* If it can’t handle a request, it passes it on.
-* Doesn’t track which handler processed it (risk of unhandled requests).
-* Handlers can use Command Pattern internally.
+Examples: `java.util.logging.Logger` API, `servlet.Filter`, Spring Security API.
 
-Command Pattern
-* Has commands that wrap all the work into one object.
-* Each command is unique and self-contained.
-* Does not pass the request to others.
-* Usually trackable or reversible (undo/redo).
-* We call a command knowing it will handle the request.
+### When to Use
 
-Key Differences
+Use the Chain of Responsibility pattern when:
+- You want to decouple the sender of a request from its receiver.
+- Multiple objects may handle a request, and the specific handler isn't known in advance.
+- You want to issue a request to one of several objects without specifying the receiver explicitly.
+- The set of handlers can change dynamically at runtime.
 
-Chain = passes request along until handled.
-Command = handles request completely itself.
+### Implementation Details
+- The chain consists of receiver objects, typically implemented as a linked list or similar structure.
+- Each handler is based on a main interface that defines the contract between chain links.
+- Concrete handlers implement the interface and interpret/process specific requests.
+- Each handler has a reference to its successor (next link in the chain).
+- [USP] Processing can start from any node in the chain and continues until the request is handled or the chain ends.
+- Efficient because it only traverses the chain as far as necessary.
+- Business logic is contained within the handlers, keeping it localized and not scattered throughout the application.
+- So nowhere else inside your application needs to know about who's approving what or what pieces are doing, what they're supposed to be doing.
 
-Chain = no automatic history.
-Command = often has history for undo/redo.
+## Chain of Responsibility vs. Command Pattern
 
-Summary:
-* Decouples the sender and receiver of a request
-    * Sender doesn’t need to know which object will handle the request
-    * Receiver doesn’t need to know who the sender was
-* Can be configured at runtime
-* Flexibility of runtime configuration can be helpful but also dangerous
-* Hierarchical in nature
-* Builds as it goes down the chain to determine which handler can process the request
-* Large chains can become performance bottlenecks
-* Business logic inside the chain can cause confusion
-* Command pattern shares some similarities with the chain of responsibility pattern
+| Aspect | Chain of Responsibility | Command Pattern |
+|--------|--------------------------|-----------------|
+| **Structure** | Chain of handlers | Commands that wrap all work into one object |
+| **Handling** | Passes request along until handled | Handles request completely itself |
+| **Tracking** | Doesn't track which handler processed it (risk of unhandled requests) | Usually trackable or reversible (undo/redo) |
+| **Coupling** | Loose coupling between handlers | Commands are self-contained |
+| **Internal Usage** | Handlers can use Command Pattern internally | We call a command knowing it will handle the request. |
+
+**Key Differences:**
+- Chain = passes request along until handled.
+- Command = handles request completely itself.
+- Chain = no automatic history.
+- Command = often has history for undo/redo.
+
+### Pitfalls
+
+1. **No Handling Guarantee**: There is no guarantee that any handler in the chain will actually process the request, leading to unhandled or dropped requests.
+2. **Order Dependency**: The sequence of handlers is critical; changing the order can silently break logic or produce incorrect results.
+3. **Runtime Configuration Risks**: Flexible configuration is powerful, but untested or incorrect setups can cause missing handlers, broken flows, or unexpected behavior.
+4. **Silent Failures**: The system may continue running even when something goes wrong (e.g., skipped handlers), making bugs hard to detect.
+5. **Performance Degradation**: Long or poorly constructed chains can introduce unnecessary processing and latency.
+6. **Memory / Resource Issues**: Chains that grow over time or handlers that retain references/resources without proper cleanup can lead to memory growth or resource leaks.
+7. **Testing Complexity**: Multiple possible paths and configurations make it difficult to test all scenarios thoroughly.
+8. **Debugging Difficulty**: Tracing the flow of a request through multiple handlers becomes harder, especially when behavior is determined at runtime.
+
+
+### Summary
+
+- Decouples the sender and receiver of a request.
+- Can be configured at runtime.
+- Flexibility of runtime configuration can be helpful but also dangerous. eg. Reordering, missing handlers, unexpected short-circuiting, more debugging because of combinatorial nature, etc.
+- Hierarchical in nature, building down the chain to find the appropriate handler.
+- Large chains can become performance bottlenecks.
+- Business logic inside the chain can cause confusion if not well-documented.
+- Shares some similarities with the Command pattern but focuses on request delegation rather than encapsulation.
