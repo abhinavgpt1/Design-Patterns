@@ -1,107 +1,64 @@
-Definition (gfg): 
-This design pattern defines a language's grammar and provide an interpreter to process statements in that language. 
-It is useful for parsing and executing expressions or commands in a system.
+## Interpreter Pattern
+- Def: The Interpreter pattern is a behavioral design pattern used to define and evaluate the grammar of a language. It provides an interpreter for that language, which is useful for parsing and executing expressions or commands.
 
-Concepts:
-Purpose of Interpreter Pattern
-    Represents a grammar (e.g., music notation, mathematical equations, programming languages).
-    Allows parsing and interpreting sentences based on defined rules.
-    Enables creation of domain-specific languages (DSLs).
-Common Uses
-    Widely used in compilers to parse source code.
-    Used to define and interpret grammars such as SQL or XML.
-    Often paired with an Abstract Syntax Tree (AST) to represent structure.
-Examples in Java API
-    java.util.Pattern: Represents compiled regular expressions for string searching.
-    java.text.Format: Abstract base class for locale-sensitive content formatting (dates, numbers, strings).
-Design Considerations
-    Choose when you need to define a language or grammar that can be interpreted.
-    Particularly useful for DSLs and scenarios involving frequent parsing/evaluation.
+### Overview
+The Interpreter pattern represents a grammar (e.g., music notation, mathematical equations, programming languages) and allows parsing and interpreting sentences based on defined rules. It represents each rule of the language as a class. It enables the creation of domain-specific languages (DSLs) and is often paired with an Abstract Syntax Tree (AST) to represent structure.
 
-Design:
-Interpreter Pattern Structure
-    Has a distinct design compared to most other patterns.
-    Uses an Abstract Base Class / AbstractExpression declaring an interface for executing operations.
-    The primary operation is the interpret() method.
+### Core Features
 
-Expression Types
-    Terminal Expressions
-        Represent leaves of the tree.
-        Contain no other expressions.
+1. **Grammar Representation**: Represents and interprets grammars for languages or expressions. eg SQL / XML.
+2. **Parsing and Evaluation**: Allows parsing and executing statements based on rules. eg. Used in compiler to parse source code.
+3. **Domain-Specific Languages**: Enables creation of DSLs for specific problem domains.
+4. **AST Integration**: Commonly used with Abstract Syntax Trees for structural representation.
+5. **Recursive Evaluation**: Non-terminal expressions call themselves recursively.
 
-    Non-terminal Expressions
-        Represent compound expressions.
-        Contain or combine other expressions.
-        Typically call themselves recursively until reaching terminal expressions or subexpressions.
+Examples: 
+`java.util.Pattern`: Represents compiled regular expressions for string searching.
+`java.text.Format`: Abstract base class for locale-sensitive content formatting (dates, numbers, strings).
 
-Key UML Components
-    Context – Holds information global to the interpreter.
-    AbstractExpression – Declares the interpret interface.
-    TerminalExpression – Implements interpret for simple symbols/leaves.
-    NonterminalExpression – Implements interpret for compound rules, may reference other expressions.
-    Client – Builds and invokes the expression tree.
+### When to Use
 
-          +----------------+
-          |    Context     |
-          +----------------+
-                  |
-                  |
-        +----------------------+
-        |  AbstractExpression  |<---------------------------+
-        |  + interpret(ctx)    |                            |
-        +----------------------+                            |
-           /            \                                   |
-          /              \                                  |
-+----------------+   +---------------------+                |
-|TerminalExpr    |   |NonterminalExpr       |               |
-|+interpret(ctx) |   |+interpret(ctx)       |               |
-+----------------+   | references other     |---------------+
-                     | AbstractExpressions  |
-                     +----------------------+
+Use the Interpreter pattern when:
+- You need to define a language or grammar that can be interpreted.
+- You have a problem that can be expressed as a grammar and interpreted repeatedly.
+- You want to create domain-specific languages (DSLs).
+- Parsing and evaluation of expressions are frequent operations.
+- The grammar is relatively simple and stable.
 
-                   +----------------+
-                   |     Client      |
-                   | builds the AST  |
-                   +----------------+
+### Implementation Details
+- **AbstractExpression**: Declares an interface for executing operations, primarily the `interpret()` method.
+- **TerminalExpression**: Represents leaves of the expression tree; implements `interpret()` for simple symbols.
+- **NonterminalExpression**: Represents compound expressions; implements `interpret()` and may reference other expressions. Typically they call themselves recursively until reaching terminal expressions or subexpressions.
+- **Context**: Stores shared state (e.g., variables, input, environment data) used during interpretation.
+- **Client**: Builds the expression tree (AST) and invokes interpretation.
+- The pattern focuses on interpretation, not parsing; parsing is handled separately. Parsing implies converting input into an AST, while interpretation evaluates the AST.
+- Expressions are organized in a tree structure for recursive evaluation.
 
-Note: This pattern has nothing to do about the parsing, but rather establishing and interpreting a grammar
+## Interpreter vs. Visitor Pattern
 
-Pitfalls:
-Complexity & Maintenance
-    If the grammar becomes large or complex, it’s difficult to maintain.
-    There is at least one class per grammar rule.
-    Complex rules often require multiple classes, increasing the class count rapidly.
+| Aspect | Interpreter Pattern | Visitor Pattern |
+|--------|---------------------|-----------------|
+| **Functionality Location** | Functions (e.g., interpret) defined inside expression objects | Functionality lives in visitors, not in expression objects |
+| **Property Access** | Direct access to properties since contained in object | Needs observer-like functionality to access properties |
+| **Adding Functionality** | Adding new functionality requires changing every expression variant | Adding a new variant requires changing every visitor |
+| **Focus** | Adding more expressions or grammar rules | Adding new visitors (operations) |
 
-Adding Variants Is Costly
-    Adding a new variant may require changes across every variant class.
-    High risk of ripple effects when modifying or extending the grammar.
+**Key Differences:**
+- Interpreter embeds behavior in expressions; Visitor separates behavior into visitor classes.
+- Interpreter is better for stable grammars; Visitor for evolving operations on stable structures.
+- Choose Interpreter for grammar interpretation; Visitor for operations on object structures.
 
-Pattern Specificity
-    Interpreter is very specific to its problem domain.
-    Unlike some other patterns, it’s less general-purpose and harder to reuse outside the defined grammar.
+### Pitfalls
 
-Mitigation
-    Other design patterns (e.g., Visitor, Composite, or Flyweight) can help manage complexity and reduce class proliferation.
+1. **Complexity and Maintenance**: Large or complex grammars are hard to maintain; at least one class per rule, leading to class explosion.
+2. **Costly Variants**: Adding new variants or extending grammar requires changes across classes, risking ripple effects.
+3. **Specificity**: Very specific to its domain; less reusable outside defined grammar.
+4. **Mitigation**: Use patterns like Visitor, Composite, or Flyweight to manage complexity.
 
-Interpreter vs Visitor:
-Interpreter and Visitor patterns have similar structures but different implementation focuses.
-
-Interpreter Pattern
-    Functions (like interpret) are defined as methods inside the expression objects.
-    Has direct access to properties because it contains the object.
-    Adding new functionality means changing every expression variant.
-
-Visitor Pattern
-    Functionality lives in the visitors, not in the expression objects.
-    Needs observer-like functionality to access properties (since they’re not inside the visitor).
-    Adding a new variant requires changing every visitor.
-
-In interpreter, the focus is more about whether you're adding more expressions or grammar rules or adding new visitors to interact with. 
-And that is where the main focus on choosing one over the other comes into play.
-
-
-Summary:
-Use Case: The Interpreter pattern is best when you need to define a grammar, rules, or validation criteria for objects.
-Flexibility: Although often shown with strings, it can also work with objects using generics.
-Scope: It’s a specialized pattern, excellent for its specific purpose but limited outside of that domain.
-Implementation Caution: Be mindful of where changes are most likely to occur; if changes are in operations rather than expressions, you might consider the Visitor pattern instead.
+### Summary
+- Use case: Best for modeling and evaluating a grammar, rules, or validation logic (often in DSLs).
+- Scope: Purpose-built—very effective within this domain, but not a general solution.
+- Parsing vs interpretation: Assumes structure is already built; focuses only on evaluation.
+- Flexibility: Works with strings or object structures (e.g., via generics).
+- Trade-off: Easy to add new expressions/grammar rules; hard to add new operations (consider Visitor in that case).
+- Complexity: Doesn’t scale well with large grammars — structure or combine with other patterns to keep it manageable.

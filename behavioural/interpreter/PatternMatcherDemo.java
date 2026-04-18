@@ -1,13 +1,13 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PatternMatcher {
+public class PatternMatcherDemo {
     public static void main(String[] args) {
         String input = "lions, tigers and bears are all present in zoo.";
         Pattern p = Pattern.compile("(lion|tiger|bear)");
         Matcher m = p.matcher(input);
         while (m.find()) {
-            System.out.println("Found a " + m.group());
+            System.out.println("Found: " + m.group());
         }
     }
 }
@@ -15,7 +15,7 @@ public class PatternMatcher {
 /**
  * Output:
  * -------
- * Found a lion
- * Found a tiger
- * Found a bear
+ * Found: lion
+ * Found: tiger
+ * Found: bear
  */

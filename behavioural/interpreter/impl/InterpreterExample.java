@@ -1,13 +1,16 @@
-// Amazing article and example by gfg - https://www.geeksforgeeks.org/system-design/interpreter-design-pattern/
+// Amazing article and example by gfg 
+// - https://www.geeksforgeeks.org/system-design/interpreter-design-pattern/
+
 class Context {
-    // Any global information needed for interpretation
+    // Context => Any information needed for expression interpretation
 }
 
-interface Expression { // Abstract Expression
+interface AbstractExpression {
     int interpret(Context context);
 }
 
-class NumberExpression implements Expression { // Terminal Expression
+// Terminal Expression
+class NumberExpression implements AbstractExpression {
     private int number;
 
     public NumberExpression(int number) {
@@ -20,11 +23,12 @@ class NumberExpression implements Expression { // Terminal Expression
     }
 }
 
-class AdditionExpression implements Expression { // Non-Terminal Expression
-    private Expression left;
-    private Expression right;
+// Non-Terminal Expression
+class AdditionExpression implements AbstractExpression {
+    private AbstractExpression left;
+    private AbstractExpression right;
 
-    public AdditionExpression(Expression left, Expression right) {
+    public AdditionExpression(AbstractExpression left, AbstractExpression right) {
         this.left = left;
         this.right = right;
     }
@@ -35,11 +39,12 @@ class AdditionExpression implements Expression { // Non-Terminal Expression
     }
 }
 
-class MultiplicationExpression implements Expression { // Non-Terminal Expression
-    private Expression left;
-    private Expression right;
+// Non-Terminal Expression
+class MultiplicationExpression implements AbstractExpression {
+    private AbstractExpression left;
+    private AbstractExpression right;
 
-    public MultiplicationExpression(Expression left, Expression right) {
+    public MultiplicationExpression(AbstractExpression left, AbstractExpression right) {
         this.left = left;
         this.right = right;
     }
@@ -57,50 +62,47 @@ class Interpreter {
         this.context = context;
     }
 
-    public int interpret(String expression) {
-        // Parse expression and create expression tree
-        Expression expressionTree = buildExpressionTree(expression);
-        
-        // Interpret expression tree
+    public int evaluateExpression(String expression) {
+        // Parse, create and evaulate expression tree
+        AbstractExpression expressionTree = buildExpressionTree(expression);
         return expressionTree.interpret(context);
     }
 
-    private Expression buildExpressionTree(String expression) {
+    private AbstractExpression buildExpressionTree(String expression) {
         // Logic to parse expression and create expression tree
-        // For simplicity, assume the expression is already parsed
-        // and represented as an expression tree
+        // For simplicity, I'm not parsing expression and hardcoding.
         return new AdditionExpression(
-            new NumberExpression(2),
-            new MultiplicationExpression(
-                new NumberExpression(3),
-                new NumberExpression(4)
-            )
-        );
+                new NumberExpression(2),
+                new MultiplicationExpression(
+                        new NumberExpression(3),
+                        new NumberExpression(4)));
     }
 }
 
 public class InterpreterExample { // Client
     public static void main(String[] args) {
-        // Input expression
-        String expression = "2 + 3 * 4";
-        
-        // Create interpreter
+        String expression = "2+3*4";
+
+        // Create interpreter. Here the context is doing anything,
+        // but it could be any additional/shared info required during interpretation.
         Context context = new Context();
         Interpreter interpreter = new Interpreter(context);
-        
-        // Interpret expression
-        int result = interpreter.interpret(expression);
+
+        int result = interpreter.evaluateExpression(expression);
         System.out.println("Result: " + result);
+
+        /**
+         * The example in Pluralsight was less meaningful.
+         * It build a grammar like this: "bears" and ("bears" or ("bears" and "tiger"))
+         * It interpreted expressions like
+         * "tigers" -> F
+         * "bears" -> T
+         * "lions tigers" -> F
+         * "lions bears" -> T
+         * "tigers bears" -> T
+         */
     }
 }
-
-// the example in Pluralsight was less meaningful. It build a grammar based on some words like -> "bears" and ("bears" or ("bears" and "tiger"))
-// It interpreted expressions like
-// "tigers"         -> F
-// "bears"          -> T
-// "lions tigers"   -> F
-// "lions bears"    -> T
-// "tigers bears"   -> T
 
 /**
  * Output:
