@@ -1,24 +1,44 @@
 public class Main {
     public static void main(String[] args) {
         MyCollection<String> collection = new MyCollection<>();
-        collection.addItem("Item1");
-        collection.addItem("Item2");
-        collection.addItem("Item3");
+        collection.addItem("Collection1_Item1");
+        collection.addItem("Collection1_Item2");
+        collection.addItem("Collection1_Item3");
 
-        IIterator<String> it = collection.myIterator();
-        while (it.hasNext()) {
-            String item = it.next();
+        IIterator<String> it1 = collection.myIterator();
+        while (it1.hasNext()) {
+            String item = it1.next();
             System.out.println(item);
         }
+        System.out.println();
 
-        // PTR: No for-each is possible for MyCollection since it doesn't implement Iterable.
+        MyCollectionUsingList<String> collectionUsingListInternally = new MyCollectionUsingList<>();
+        collectionUsingListInternally.addItem("Collection2_Item1");
+        collectionUsingListInternally.addItem("Collection2_Item2");
+        collectionUsingListInternally.addItem("Collection2_Item3");
+
+        IIterator<String> it2 = collectionUsingListInternally.myIterator();
+        while (it2.hasNext()) {
+            String item = it2.next();
+            System.out.println(item);
+        }
+        System.out.println();
+
+        // PTR: No for-each is possible for MyCollection or MyCollectionUsingList
+        // since none implements Iterable.
     }
 }
 
 /**
  * Output:
  * -------
- * Item1
- * Item2
- * Item3
+ * Note: .\MyCollection.java uses unchecked or unsafe operations.
+ * Note: Recompile with -Xlint:unchecked for details.
+ * Collection1_Item1
+ * Collection1_Item2
+ * Collection1_Item3
+ * 
+ * Collection2_Item1
+ * Collection2_Item2
+ * Collection2_Item3
  */
