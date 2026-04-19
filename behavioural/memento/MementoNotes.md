@@ -1,95 +1,67 @@
-=== CONCEPTS ===
-When to Use
-- You need to restore an object to a previous state
-- Commonly used for undo/rollback functionality in applications
+## Memento Pattern
+- Def: Memento is a behavioral design pattern that lets you save and restore the previous state of an object without revealing its internal structure. It works like taking a snapshot of an object at a particular moment in time. This pattern is commonly used to implement undo and redo functionality in applications.
 
-Key Idea
-- Externalize the object's internal state so it can be restored later
-- Must do this without violating encapsulation
+### Overview
+The Memento pattern externalizes an object's internal state so it can be saved and restored later. It involves three key participants: the originator (the object being saved), the memento (the saved state), and the caretaker (manages the mementos).
 
-Benefits
-- Supports undo/rollback mechanisms cleanly
-- Shields complex internals from other objects
-- Maintains encapsulation by controlling who can access saved state
+### Core Features
 
-Examples (Java)
-- java.util.Date → internally represented by a long timestamp; restoring state is done by resetting this value
-- java.io.Serializable → allows an object's state to be fully saved and recreated—serves as a better example of the memento concept
+1. **State Capture**: Saves the internal state of an object for later restoration.
+2. **Encapsulation Preservation**: Maintains encapsulation by controlling access to saved state.
+3. **Undo/Redo Support**: Enables rollback to previous states.
+4. **Externalization**: Allows state to be stored externally without exposing internals.
+5. **Memory Management**: Caretaker handles storage and cleanup of mementos.
 
-=== DESIGN ===
-Class-Based Design
-- Pattern consists of three main roles:
+Examples: 
+- `java.util.Date` - internally represented by a long timestamp; restoring state is done by resetting this value.
+- `java.io.Serializable` - allows an object's state to be fully saved and recreated — is a better example of Memento.
 
-1. Originator
-- The object whose state we want to save or restore
-- Responsible for creating mementos that capture its internal state
+### When to Use
 
-2. Caretaker
-- Manages stored mementos (e.g., keeps a list/history)
-- Think of it like the Undo menu in an application
-- Does not inspect the contents of a memento
+Use the Memento pattern when:
+- You need to save and restore an object's state without exposing its internals. 
+    - Same as saying you want to implement checkpoints or snapshots of object state.
+- Undo/rollback functionality is required.
+- You want to manage state history without cluttering the originator with state management logic.
 
-3. Memento
-- Represents the saved state of the originator
-- Stores a "magic cookie" → a collection of the specific fields needed to recreate the originator's state
-- Not a literal object but a concept describing encapsulated state data
+### Implementation Details
+- **Originator**: The object whose state we want to save or restore. Can create mementos containing its current state. Can restore from a memento.
+- **Memento**: Stores the internal state of the originator, so that it can be restored later; acts as a snapshot.
+- **Caretaker**: Stores and manages mementos; doesn't inspect or modify them. Think of it as the Undo option of an application.
+- Mementos are opaque to the caretaker; only the originator can access the state.
+- Common state storage way is serialization.
+- Caretaker decides retention policy for mementos.
 
-UML Structure
-- Contains three components: Originator, Caretaker, Memento
-- Originator ↔ Memento handle state
-- Caretaker stores Mementos but doesn't modify them
+## Memento vs. Command Pattern
 
-=== PITFALLS ===
-Potentially expensive
-- Mementos may contain large copies of originator state
-- Storing many mementos can have high memory and performance overhead
+| Aspect | Memento Pattern | Command Pattern |
+|--------|-----------------|-----------------|
+| **Focus** | Captures object state | Captures requests/actions as objects |
+| **History** | Independent snapshots of state | Independent operations |
+| **Usage** | Designed to manage history via rollback/restore | Designed for executing actions; undo/redo is good to have but state management isn't the prime focus |
+| **State Management** | Explicit state snapshots | May include state for undo |
+| **Encapsulation** | Protects internal state | Encapsulates actions |
 
-Caretaker memory management
-- Caretaker must decide how many mementos to keep
-- Poor cleanup can lead to memory leaks
-- Requires clear strategy for deleting old history
+**Key Differences:**
+- Memento captures state for history; Command captures actions.
+- Memento emphasizes state restoration; Command emphasizes action execution.
+- Both can support undo, but Memento is more direct for state-based undo.
 
-Encapsulation risk
-- Must ensure originator state is not exposed through the memento
-- State should be transferred into the memento only, not accessible to external objects
+### Pitfalls
 
-=== COMPARISON ===
-Memento can be compared with the Command pattern for implementing history.
+1. **Memory Overhead**: Storing large or many mementos can be expensive.
+    - Mitigation: limit history size, store diffs instead of full snapshots, or compress snapshots.
+2. **Performance**: Frequent state capture can impact performance.
+    - Mitigation: capture state at meaningful checkpoints (batching), or use incremental/delta mementos.
+3. **Memory Leaks**: Poor cleanup of old mementos by caretaker can lead to memory leaks. Requires clear cleanup policy.
+    - Mitigation: enforce policies like fixed-size history, time-based eviction, or explicit pruning.
+4. **Encapsulation Risks**: Memento must not expose state inappropriately. State should be transferred into the memento only, and not accessible to external objects.
+    - Mitigation: make mementos immutable and restrict access (e.g., inner/private classes).
 
-Memento Pattern:
-- Captures state of an object
-- Each memento = an independent snapshot of state
-- Designed to build history (managed by the caretaker)
-- Enables rollback/restore functionality
+### Summary
 
-Command Pattern:
-- Captures requests, not state
-- Each command = an independent operation to be executed
-- Can support history, but many implementations don't emphasize it
-- Typically focuses on encapsulating an action, not preserving past object states
-
-Core Contrast:
-- Memento → history of state
-- Command → history of actions (optional)
-- Command can maintain history since all pieces exist, but it's not the usual emphasis
-
-=== SUMMARY ===
-Purpose
-- Captures the state of an object at a specific point in time
-- Allows restoring or recreating the object from that saved state
-
-Key Strength
-- Enables accurate rollback to any saved moment
-- Useful for undo/restore scenarios
-
-Potential Cost
-- Capturing many states can be heavy in memory
-- Large or frequent mementos can lead to memory leaks if not managed carefully
-
-Relation to Command Pattern
-- Similar in concept—both can support history
-- Command focuses on actions/operations, not state
-- To implement undo with commands, you often need memento-like state capture
-
-Overall
-- Powerful for state restoration, but requires careful memory management
+- Captures and restores object state without violating encapsulation aka without exposing internal implementation.
+- Enables undo/rollback by saving snapshots.
+- Requires careful memory management due to potential overhead and memory leaks.
+- Similar to Command pattern - both can support history. To implement undo with commands, you often need memento-like state capture.
+- Powerful for state restoration but costly if not managed well.

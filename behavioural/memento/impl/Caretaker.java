@@ -1,15 +1,15 @@
 import java.util.Stack;
 
 public class Caretaker {
-    private Stack<EmployeeMemento> mementoStack = new Stack<>();
+    private Stack<PersonMemento> mementoStack = new Stack<>();
     
-    public void save(Employee emp) {
-        mementoStack.push(emp.getMemento());
+    public void save(Person person) {
+        mementoStack.push(person.getMemento());
     }
     
-    public void revert(Employee employee) {
+    public void revert(Person person) {
         if (!mementoStack.isEmpty()) {
-            employee.setFromMemento(mementoStack.pop());
+            person.setFromMemento(mementoStack.pop());
         }
     }
 }
