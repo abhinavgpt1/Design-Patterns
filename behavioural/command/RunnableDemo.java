@@ -29,3 +29,10 @@ class Task implements Runnable {
         System.out.println("num1 + num2: " + (num1 + num2));
     }
 }
+
+/**
+ * Output:
+ * -------
+ * num1 + num2: 50
+ * num1 + num2: 15
+ */
