@@ -1,13 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 
-// earlier the Command used to handle lights and functionality like turnOnAll -> now the Mediator does it
+// Earlier individual command holded functionality like turnOnLight, turnOffLight, toggleLight, turnOnAllLights, etc. 
+// now all the functionalities are centralised in Mediator. Commands reference this mediator 
 public class Mediator {
-    List<Light> lights;
-
-    public Mediator() {
-        lights = new ArrayList<>();
-    }
+    private List<Light> lights = new ArrayList<>();
 
     public void registerLight(Light light) {
         lights.add(light);
@@ -15,14 +12,14 @@ public class Mediator {
 
     public void turnOnAll() {
         for (Light light : lights) {
-            if(!light.isOn()) // we don't turn on an already on light
-                light.toggle();
+            if (!light.isOn()) // we don't turn on a light which is already on
+                light.toggle(); // or simply, light.turnOff()
         }
     }
 
     public void turnOffAll() {
         for (Light light : lights) {
-            if(light.isOn()) // we don't turn off an already off light
+            if (light.isOn())
                 light.toggle();
         }
     }

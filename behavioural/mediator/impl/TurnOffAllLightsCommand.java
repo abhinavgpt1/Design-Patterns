@@ -1,5 +1,5 @@
 public class TurnOffAllLightsCommand {
-    Mediator mediator;
+    private Mediator mediator;
 
     public TurnOffAllLightsCommand(Mediator mediator) {
         this.mediator = mediator;

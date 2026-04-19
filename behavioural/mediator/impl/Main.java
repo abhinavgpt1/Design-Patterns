@@ -12,17 +12,26 @@ public class Main {
 
         TurnOnAllLightsCommand turnOnAllLightsCommand = new TurnOnAllLightsCommand(mediator);
         turnOnAllLightsCommand.execute();
+        System.out.println();
         
         TurnOffAllLightsCommand turnOffAllLightsCommand = new TurnOffAllLightsCommand(mediator);
         turnOffAllLightsCommand.execute();
+
+        // There shouldn't be a need of Commands anymore in Client. Instead, mediator should be encapsulating these commands.
+        // Ideally, it should be the real-world objects notifying mediator to handle a task by itself based on event (enum).
+
+        // This would be a good example of Mediator if there was a collection of Commands centralised in one place.
+        // eg. A switch can have 2 commands (On/Off) which can be internally stored, the client / Main shouldn't be coding Switch.execute(OnCommand), Switch.execute(OffCommand).
+        // Now the downside of this can be what if there's a new command? You can add it into the Switch class, np, but the class file will become big. Also, the command isn't shareable if it's composed inside a Switch. What if Alexa if the one turning on light? Hence we need a mediator.
     }
 }
 
 /**
  * Output:
  * -------
- * Living Room light is ON
- * Kitchen light is ON
- * Living Room light is OFF
- * Kitchen light is OFF
+ * Living Room light turned On
+ * Kitchen light turned On
+ * 
+ * Living Room light turned Off
+ * Kitchen light turned Off
  */

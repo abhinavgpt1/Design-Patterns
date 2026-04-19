@@ -1,78 +1,72 @@
-=== CONCEPTS ===
-Why Mediator?
-- Needed to achieve loose coupling between objects
-- Useful when multiple well-defined objects communicate in complex ways
-- Prevents spaghetti code caused by direct inter-object communication
-- Helps create reusable components by centralizing communication
+## Mediator Pattern
+- Def: The Mediator design pattern is a behavioral pattern that centralizes communication between objects through a mediator object, thus reducing chaotic and direct dependencies among objects.
 
-Core Idea
-- Acts as a hub or router for all communication between objects
-- Routes interactions through a central component
-- Objects communicate through the mediator instead of directly with each other
+### Overview
+The Mediator pattern introduces a mediator object that handles communication between different objects (colleagues), preventing direct interactions and reducing dependencies. It acts as a central hub for coordinating interactions.
 
-Examples
-- java.util.Timer mediates calls via its schedule methods
-- java.lang.reflect.Method invoke method mediates calls to reflected classes
+### Core Features
 
-Design Considerations
-- Use when you have complex communication between multiple objects
-- Centralizes control logic in one place
-- Makes individual components simpler and more reusable
+1. **Loose Coupling**: Reduces direct dependencies between objects by centralizing communication.
+2. **Centralized Control**: All interactions go through the mediator, making it easier to manage and modify, hence prevents spaghetti code caused by direct inter-object communication.
+3. **Reusability**: Individual components become more reusable since they don't need to know about others.
+4. **Simplified Maintenance**: Changes to interaction logic are confined to the mediator.
+5. **Interface-Based**: Often uses interfaces for flexibility in mediator implementations.
 
-=== DESIGN ===
-- Mediator design is interface-based with a concrete class implementation
-- Can also be implemented directly as a class, but interface adds flexibility
-- Using an interface allows swapping mediators depending on the situation
-- Mediator minimizes inheritance since it handles communication instead of relying on class hierarchies
-- Mediator knows about the colleagues, but colleagues don't know about each other
-- UML representation involves a Mediator interface and ConcreteMediator implementation
+Examples: `java.util.Timer` for scheduling, `java.lang.reflect.Method.invoke()` for reflection.
 
-=== PITFALLS ===
-Risk of a “deity object”
-- Mediator can become overly large and responsible for too many things.
-- Happens when it handles every scenario and grows quickly.
+### When to Use
 
-Limited subclassing
-- Mediator structure can restrict how easily you can subclass components.
-- You can create different mediators for different situations (often due to platform differences).
+Use the Mediator pattern when:
+- You have a set of objects that communicate in complex ways, leading to tight coupling.
+- Reusing objects is difficult due to interdependencies.
+- You want to centralize control logic for interactions.
+- Behavior distributed among several classes should be customizable without subclassing.
 
-Confusion with the Command Pattern
-- It can be unclear whether to use the Mediator instead of or along with the Command Pattern.
-- Demo uses Mediator with Command Pattern because they work well together.
+### Implementation Details
+- **Mediator Interface**: Defines the communication contract.
+- **Concrete Mediator**: Implements the interface and coordinates between colleagues.
+- **Colleague Classes**: Objects that communicate through the mediator; they reference the mediator but not each other.
+- Mediator knows about colleagues; colleagues know about the mediator, but colleagues don't know about each other.
+- Can be implemented as a class, but interface adds flexibility. Using an interface allows swapping mediators.
+- Minimizes inheritance (aka subclassing of colleague classes for inter-communication) by handling communication externally.
 
-Need to compare with other patterns
-- Comparison helps solidify understanding.
-- The text avoids comparing with the Command Pattern again since it was already used in the demo.
+## Mediator vs. Observer Pattern
 
-=== COMPARISON ===
-Mediator stands distinct from the Observer pattern, though both promote decoupling.
+| Aspect | Mediator Pattern | Observer Pattern |
+|--------|------------------|------------------|
+| **Purpose** | Defines how objects interact | Defines one-to-many broadcast |
+| **Coupling** | Decouples by replacing direct references with mediator | Decouples via broadcast mechanism instead of managed interaction |
+| **Interaction** | Explicit and specific interactions | Generic notifications to listeners; Listeners decide individually how to react |
+| **Modification** | Adding features requires changing (modity / extend) mediator since it controls the interactions | Adding features is easy - just add a new listener; no need to change any central orchestrator |
+| **Centralization** | Centralized control | Decentralized reactions; Instead of defining interactions, it notifies all subscribed listeners |
 
-Mediator Pattern:
-- Defines how objects interact with each other
-- Decouples objects by replacing direct references with a single mediator reference
-- Interaction logic is explicit and specific
-- Adding features often means modifying or extending the mediator, since it controls the interactions
+**Key Differences:**
+- Mediator centralizes and controls interactions; Observer decentralizes and broadcasts events.
+- Mediator is for managed, specific interactions; Observer is for generic event notifications.
 
-Observer Pattern:
-- Defines a one-to-many broadcast model
-- Instead of defining interactions, it notifies all subscribed listeners
-- Listeners decide individually how to react
-- Also promotes decoupling, but via a broadcast mechanism instead of managed interaction
-- More generic compared to mediator
-- Adding features is easy—just add a new listener; no need to change any central orchestrator
+### Pitfalls
 
-Core Contrast:
-- Mediator: centralizes and controls interactions
-- Observer: decentralizes and broadcasts events
+1. **God Object Risk**: Mediator can become too large and handle too many responsibilities.
+2. **Limited Subclassing**: Restricts easy subclassing of components turning them dumb since all logic is in the mediator. 
+    - To support different behaviors, you often need multiple mediators, which can shift complexity rather than eliminate it.
+3. **Confusion with Command**: Can be confusing to use Mediator instead of or along with Command pattern; often used together.
+4. **Overhead in Simple Systems**: Adds extra indirection that can make simple object interactions more complex than needed.
+5. **Single Point of Failure**: If the mediator breaks, all communication between components is affected.
+6. **Hidden Flow of Control**: Interaction logic is centralized, making system behavior harder to trace and debug.
+    - qq: why is it hard to debug when we know all logic is centralised?
+    - ans: Because control flow is hidden inside the mediator, it’s not obvious how components interact or why a behavior occurred. In complex systems, the mediator’s logic can be hard to follow. So the flow becomes: "Something happened → go check mediator → find out what actually happens"
+7. **Low Reusability**: Mediators are usually tightly coupled to specific components, limiting reuse in other contexts. A mediator doesn’t just "coordinate anything" - it encodes business rules and interaction logic between particular objects. eg,
+    - A ChatRoomMediator might coordinate User, Message, and Notification.
+    - A UIFormMediator might coordinate Button, TextField, and Checkbox.
+    - Even though both are "mediators", their logic is completely different.
 
-=== SUMMARY ===
-- Great for loose coupling, especially in complex communication scenarios
-- When objects interact directly (e.g., via the Command Pattern), communication can become noisy
-- Mediator simplifies interactions by centralizing communication
-- Mediator may absorb complexity, which is acceptable since it keeps complexity out of individual objects
-- Mediator and Command Pattern complement each other—they are not competing patterns
-- Mediator helps resolve Command Pattern shortcomings by handling coordination at the correct layer
-- Using a Mediator alone (without Command) often results in awkward code patterns
-- Using Mediator + Command together provides a cleaner, more structured architecture
+### Summary
 
-PTR: Mediator works best alongside Command Pattern for clean communication orchestration
+- Promotes loose coupling in complex communication scenarios.
+- Direct communications can become noisy/messy, so it centralizes interaction logic to absorb complexity and simplify components.
+- Works well with Command pattern for clean architecture and communication orchestration.
+    - Both these patterns complement each other rather than compete.
+    - Mediator helps resolve Command Pattern shortcomings by handling coordination at the correct layer, while Command focuses on encapsulating actions.
+    - Using a Mediator alone (without Command) often results in bloated and less clean code, since it ends up handling both coordination and execution leading to a "god object" scenario.
+- Avoids spaghetti code from direct object communication.
+- Best used when coordination is needed at a higher layer.
