@@ -33,6 +33,9 @@ public class Main {
         // You can add it into the Switch class, np, but the class file will become big. 
         // Also, the command isn't shareable if it's composed inside a Switch. 
         // What if Alexa/MCB is the one turning on light? Hence we need a mediator.
+
+        // PTR: Commands shouldn't refer mediator. It should be the opposite way.
+        // Mediator mediates and doesn't execute. It's the job of command to do it.
     }
 }
 
