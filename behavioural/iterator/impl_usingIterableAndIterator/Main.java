@@ -8,15 +8,14 @@ public class Main {
         repo.addBike("Suzuki");
 
         Iterator<String> it = repo.iterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             System.out.println(it.next());
         }
-
         System.out.println();
 
-        // PTR: foreach loop internally uses iterator
-        // this works only because BikeRepository implements Iterable interface
-        for(String bike : repo) {
+        // PTR: for-each loop internally uses iterator.
+        // This works only because BikeRepository implements Iterable interface.
+        for (String bike : repo) {
             System.out.println(bike);
         }
     }
