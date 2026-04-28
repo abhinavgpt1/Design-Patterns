@@ -8,10 +8,11 @@ public class Main {
         OrderTemplate storeOrder = new StoreOrder();
         storeOrder.processOrder();
 
-        // PTR: processOrder() is same i.e. algo is same, but the inner parts change with sub-classes
-        // PTR: the parent i.e. OrderTemplate calls the child's methods (doCheckout, doPayment, etc.) - rewriting pieces is a core feature of Template Pattern
-        
-        // PTR: Template is written with abstract base class usually.
+        // PTR:
+        // - processOrder() algo is same but the inner parts change with sub-classes
+        // - Template method (aka parent, OrderTemplate) calls the overriden methods in subclasses
+        // - Rewriting pieces is a core feature of Template Pattern
+        // - Template relies on abstract base class unlike strategy pattern which has algo logic contained in subclasses.
 
     }
 }

@@ -1,5 +1,4 @@
 public class WebOrder extends OrderTemplate {
-
     @Override
     protected void doCheckout() {
         System.out.println("WebOrder: get items from cart");

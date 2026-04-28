@@ -1,5 +1,4 @@
-public class StoreOrder extends OrderTemplate{
-
+public class StoreOrder extends OrderTemplate {
     @Override
     protected void doCheckout() {
         System.out.println("StoreOrder: get items from shelf");
@@ -20,5 +19,4 @@ public class StoreOrder extends OrderTemplate{
     protected void doDelivery() {
         System.out.println("StoreOrder: hand over the item to customer");
     }
-    
 }

@@ -1,18 +1,26 @@
 public abstract class OrderTemplate {
-    public boolean isGift; // a hook (optional tho)
+    public boolean isGift; // a hook (= optional to override)
+
     protected void wrapGift() {
         System.out.println("Gift wrap the item");
     }
+
     protected abstract void doCheckout();
+
     protected abstract void doPayment();
+
     protected abstract void doReceipt();
+
     protected abstract void doDelivery();
 
-    // template method - so the process/algo is same for all orders, but the parts/implementation changes != strategy, where the whole algo changes.
+    // Template method => the process/algo is same for all orders, but the parts change
+    // This isn't strategy pattern where the whole algo changes.
     public final void processOrder() {
         doCheckout();
         doPayment();
-        // if it's a gift, wrap it else do receipt
+        
+        // If it's a gift, wrap it else do receipt. 
+        // Generally, receipt with payment is not send to customer. Though items are listed on it.
         if (isGift) {
             wrapGift();
         } else {
