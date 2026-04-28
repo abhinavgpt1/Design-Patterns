@@ -4,19 +4,19 @@ public class CreditCard {
     private String expiryDate;
     private String cvv;
 
-    // this instance param could've been avoided, and isValid could have taken an arg too.
-    private ValidationStrategy validationStrategy;
+    // Bryan Hansen's impl had this instance param - which make ValidationStrategy tightly coupled to card.
+    // private ValidationStrategy validationStrategy;
 
-    public CreditCard(String cardNumber, String cardHolderName, String expiryDate, String cvv, ValidationStrategy validationStrategy) {
+    public CreditCard(String cardNumber, String cardHolderName, String expiryDate, String cvv) {
         this.cardNumber = cardNumber;
         this.cardHolderName = cardHolderName;
         this.expiryDate = expiryDate;
         this.cvv = cvv;
-        this.validationStrategy = validationStrategy;
+        // this.validationStrategy = validationStrategy;
     }
 
-    public boolean isValid() {
-        return validationStrategy.isValid(this);
+    public boolean isValid(ValidationStrategy strategy) {
+        return strategy.isValid(this);
     }
 
     public String getCardNumber() {

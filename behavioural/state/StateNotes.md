@@ -43,7 +43,8 @@ Can be compared with the Strategy pattern as both use polymorphism for behavior.
 |--------|----------------|------------------|
 | **Purpose** | Encapsulate state and handle behavior based on internal state | Encapsulate interchangeable algorithms |
 | **Structure** | Interface/Abstract class defines behavior; each state is its own class | Interface/Abstract class defines the algorithm/behavior; each strategy is its own class |
-| **Transitions** | States know their next state and trigger transitions by telling context what its next state is | Strategies do not know about each other;No transitions between strategies |
+| **Transitions** | States (may) know their next state and trigger transitions by telling context what its next state is | Strategies do not know about each other;No transitions between strategies |
+| **Client Role** | Context manages state automatically | Client selects strategy | 
 | **Awareness** | States coordinate with context | Strategies are independent |
 | **Behavior Change** | Dynamic behavior as context moves from state to state | Swapped at runtime by client, but strategies do not coordinate or transition themselves |
 | **Use Case** | State-dependent dynamic behavior | Let's you swap algorithm at runtime without them knowing the context that uses them, eg. checkout system, billing system |
@@ -51,6 +52,7 @@ Can be compared with the Strategy pattern as both use polymorphism for behavior.
 **Key Differences:**
 - State manages transitions and context; Strategy focuses on algorithm interchange.
 - State encapsulates state logic; Strategy encapsulates algorithm logic.
+- Strategy chosen by client; State managed internally.
 - Both use polymorphism but for different concerns.
 
 ### Pitfalls

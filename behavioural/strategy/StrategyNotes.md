@@ -1,97 +1,86 @@
-=== CONCEPTS ===
-When to Use the Strategy Pattern
-- When you want to eliminate conditional logic (if/else, switch) tied to algorithm selection
-- When adding new algorithm variations is difficult under the current design
-- When the client is expected to choose the algorithm/strategy at runtime
+## Strategy Pattern
+- Def: The Strategy pattern is a behavioral design pattern that defines a family of algorithms, put each of them into a separate class each one, and makes them interchangeable.
 
-What the Strategy Pattern Does
-- Encapsulates algorithm options into separate, dedicated classes
-- Removes algorithm-selection logic from the main application flow
-- Promotes cleaner, extensible code by isolating variations
+### Overview
+The Strategy pattern encapsulates algorithms into separate classes, allowing clients to choose and switch between them at runtime. 
+It eliminates conditional logic for algorithm selection and promotes clean, extensible code.
 
-Client's Role
-- The client is aware of available strategies
-- The client explicitly selects and provides the strategy to use
+### Core Features
 
-Java Example
-- java.util.Comparator is a key example
-- Used to apply different comparison strategies when sorting collections
+1. **Algorithm Encapsulation**: Each algorithm is in its own class.
+2. **Interchangeability**: [Key Intent] Removes algorithm-selection **conditional** logic from the **core** application flow and can be swapped dynamically without changing client code.
+3. **Client Choice**: Client is aware of the available algorithms and selects the appropriate strategy.
+4. **Independence**: Strategies don't know about each other.
+5. **Extensibility**: New algorithms can be added easily.
 
-=== DESIGN ===
-Design Structure
-- Strategy is typically defined using an interface, but often implemented with an abstract base class for shared behavior
-- Each algorithm variant is implemented as a separate concrete strategy class
-- Every concrete strategy contains its own unique algorithm implementation
+Examples: `java.util.Comparator` for sorting strategies.
 
-Key Intent
-- Minimize—or ideally eliminate—if/else conditional logic when selecting or executing different algorithms
-- Move algorithm selection outside the core application logic
+### When to Use
 
-Knowledge & Independence
-- The client is aware of the available strategies and selects which one to use
-- Strategies operate independently and do not need to know about each other
+Use the Strategy pattern when:
+- You have multiple algorithms for a task and want to switch between them.
+- You want to avoid conditional statements for algorithm selection.
+- Algorithm variations are complex and need isolation.
+- Clients need to choose algorithms at runtime.
 
-UML Components
-- Context – the object that uses a strategy
-- Strategy Interface – defines the algorithm contract
-- Concrete Strategy Classes – implement different versions of the algorithm
+### Implementation Details
+- **Strategy Interface**: Defines the algorithm contract. Often implemented with an abstract base class for shared behavior.
+- **Concrete Strategies**: Implement specific algorithms. Each algorithm variant is a separate concrete class.
+- **Context**: Uses a strategy; client provides the strategy instance.
+- Client creates and passes the strategy to the context.
+- Strategies are independent; no communication between them.
 
-=== PITFALLS ===
-Design & Architecture
-- Strategy selection can shift conditional complexity to the client, and over-engineering is common when only a few algorithm variations exist
+## Strategy vs. State Pattern
 
-Correctness & Safety
-- Choosing the wrong strategy is easy because there's no compile-time enforcement, causing subtle runtime errors
+| Aspect | State Pattern | Strategy Pattern |
+|--------|----------------|------------------|
+| **Purpose** | Encapsulate state and handle behavior based on internal state | Encapsulate interchangeable algorithms |
+| **Structure** | Interface/Abstract class defines behavior; each state is its own class | Interface/Abstract class defines the algorithm/behavior; each strategy is its own class |
+| **Transitions** | States (may) know their next state and trigger transitions by telling context what its next state is | Strategies do not know about each other;No transitions between strategies |
+| **Client Role** | Context manages state automatically | Client selects strategy | 
+| **Awareness** | States coordinate with context | Strategies are independent |
+| **Behavior Change** | Dynamic behavior as context moves from state to state | Swapped at runtime by client, but strategies do not coordinate or transition themselves |
+| **Use Case** | State-dependent dynamic behavior | Let's you swap algorithm at runtime without them knowing the context that uses them, eg. checkout system, billing system |
 
-Usability & Lifecycle
-- Clients must manage creation and lifecycle of strategy objects, which can lead to misuse or unnecessary object churn
+**Key Differences:**
+- Strategy for algorithm selection; State for state-dependent behavior.
+- Strategy encapsulates algorithm logic; State encapsulates state logic.
+- Strategy chosen by client; State managed internally.
+- Both use polymorphism but for different purposes.
 
-Maintenance & Scalability
-- Large sets of strategies hurt discoverability and require discipline to avoid duplicated logic or diverging implementations
+### Pitfalls
 
-Cross-Strategy Coordination
-- Because strategies don't know about each other, scenarios needing shared or coordinated behavior become awkward or unsupported
+1. **Client Complexity**: Client must know and manage strategies, and can shift conditional complexity to the client.
+2. **Usability & Lifecycle**: Clients must manage creation and lifecycle of strategy objects, which can lead to misuse or unnecessary object churn.
+3. **Over-engineering**: Unnecessary for simple algorithm variations.
+4. **Runtime Errors**: Wrong strategy choice is common since there's no compile-time enforcement causing subtle runtime errors.
+5. **Maintenance & Scalability**: Large sets of strategies hurt discoverability and require discipline to avoid duplicated logic or diverging implementations.
+    - eg. CreditCardStrategy, UPIStrategy and WalletStrategy may start varying over time although they started with the same logic.
+6. **Cross-Strategy Coordination**: Since strategies don't know about each other, scenarios needing shared or coordinated behavior become awkward or unsupported.
+    - eg. Given PaymentStrategy, DiscountStrategy, FraudCheckStrategy - Apply discount only if fraud check passes, and log everything consistently
+    - Something like makes context messy
+    `
+        if (fraudStrategy.check()) {
+            discountStrategy.apply();
+        }
+        paymentStrategy.pay();
+    `
+    - Something like this breaks pattern
+    `
+    class DiscountStrategy {
+        FraudStrategy fraud;
+        void apply() {
+            if (fraud.check()) {...}
+        }
+    }
+    ` 
+5. **Performance**: Interface switch overhead and object creation can introduce small but notable costs.
+6. **Code Quality**: Maintaining consistency across strategy implementations requires strong team discipline to prevent logic drift or accidental re-introduction of conditionals.
 
-Performance
-- Interface indirection and excessive strategy instantiation can introduce small but notable runtime performance costs
+### Summary
 
-Team & Code Quality
-- Maintaining consistency across strategy implementations requires strong team discipline to prevent logic drift or accidental re-introduction of conditionals
-
-=== COMPARISON ===
-Strategy can be compared with the State pattern as both use polymorphism for behavior.
-
-Purpose:
-- Strategy: Focuses on choosing between interchangeable algorithms
-- State: Focuses on representing and transitioning between object states
-
-Behavior:
-- Strategy: Algorithms are independent and do not know about each other
-- State: Each state knows which state it can transition to next
-
-Structure:
-- Strategy: Interface (or abstract base) with one class per algorithm
-- State: Interface with one class per state
-
-Client Involvement:
-- Strategy: Client chooses which strategy to use
-- State: Context transitions automatically based on state logic
-
-=== SUMMARY ===
-Core Purpose
-- Externalizes algorithms so behavior varies without changing the main application
-
-Client Role
-- Client must know and choose the correct strategy (e.g., selecting the right credit-card processor)
-
-Structure
-- One class per strategy, each implementing a specific algorithm
-
-Main Benefit
-- Eliminates conditional logic, removing nested if/else blocks from the core code
-
-Testability
-- Each strategy is isolated, making individual algorithms easy to test
-
-Clean Design
-- Keeps the main method simple and readable, shifting branching logic to separate classes
+- Externalizes algorithms for flexible behavior variation without changing main application.
+- Client chooses strategy; each in separate class.
+- Requires client awareness of available strategies.
+- Eliminates conditional logic from core code. Keeps main method simple and clean, shifting branching logic to separate classes.
+- Strategy isolation makes individual algorithms easy to test and maintain.
