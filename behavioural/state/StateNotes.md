@@ -1,88 +1,76 @@
-=== CONCEPTS ===
-Why Use the State Pattern
-- To localize state-specific behavior into its own objects
-- Ensures the current state is stored in an object, not scattered across variables and conditionals
-- Cleanly separates what state you are in from where you are in the application
+## State Pattern
+- Def: State is a behavioral design pattern that lets an object alter its behavior when its internal state changes. It appears as if the object changed its class.
 
-Design Benefits
-- Helps objects follow the Open–Closed Principle (OCP):
-  - The main class is closed for modification
-  - Individual state classes are open for extension
-- Makes behavior changes at runtime more organized and maintainable
+### Overview
+The State pattern encapsulates state-specific behavior into separate state classes. The primary object, called the Context, delegates all state-related work to an instance of one of these state classes. This eliminates conditional statements and makes state transitions explicit.
+It cleanly separates what state you are in from where you are in the application. Think of the State Pattern as splitting your code into two orthogonal concerns:
+    - "What state you are in" → the current behavior mode
+    - "Where you are in the application" → the flow/context that's executing
 
-Examples
-- No strong examples in core Java API
-- Some argue the JSF lifecycle phases reflect the State pattern
-- Others claim Iterator implementations use it because behavior changes at runtime — though this is generally considered a weak or inaccurate example
+### Core Features
 
-=== DESIGN ===
-Structure
+1. **State Encapsulation**: Each state is represented by its own class with specific behavior.
+2. **Dynamic Behavior**: Object behavior changes based on current state without modifying the class.
+3. **Open-Closed Principle**: New states can be added without changing existing code. Main class is closed for modification; individual states are open for extension.
+4. **Clean Transitions**: State changes are handled explicitly by state objects, making behavior transitions organized and maintainable.
+5. **Reduced Complexity**: Ensures the current state is stored as an object, not scattered across variables and conditionals
 
-State interface or abstract class:
-- Typically implemented as an abstract class to provide default behavior
-- Useful because not every state needs to implement every method
+Examples: No strong example in core java, but JSF lifecycle phases (arguably), and Iterator since its behavior changes at runtime (weak example).
 
-Concrete State Classes:
-- Each state is represented as its own class
-- Encapsulates behavior specific to that particular state
+### When to Use
 
-Context (the main object):
-- Holds a reference to the current state object
-- Unaware of all possible states — unlike earlier approaches where the context knew every state and used conditionals
-- Delegates state-specific behavior to the current state instance
+Use the State pattern when:
+- An object's behavior depends on its state and must change at runtime.
+- Operations have large, multipart conditional statements based on state.
+- You want to avoid scattering state-specific code across the class.
+- State transitions are complex and need to be managed explicitly.
 
-UML Components
-- Context
-- State (abstract class or interface)
-- Concrete States (one class per state)
+### Implementation Details
+- **State Interface/Abstract Class**: Defines methods for state-specific default behavior. Useful because not every state needs to implement every method.
+- **Concrete State Classes**: Implement state-specific logic.
+- **Context**: Holds reference to current state; delegates state-specific behavior to the current state object.
+There are 3 valid models on state transition, it depends on how you design the system:
+1. State-driven transitions: State knows its next state and triggers transition by telling context what its next state is.
+    - Context is unaware of all states, only knows the current one - unlike earlier approaches (State_BadImpl.java) where the context knew every state and used conditionals. eg. impl in current codebase.
+2. Context-driven transitions: Context is responsible for transitions between states.
+    - State knows that a transition should happen, but Context decides how that transition is performed
+3. Externalized transitions: Transition logic is handled by an external component. eg. TransitionManager / StateMachine.
 
-=== PITFALLS ===
-- Know your states clearly — poorly defined states cause inconsistencies and confusion
-- More classes — the pattern increases class count compared to simple conditionals
-- Logic leakage into the context — avoid putting conditional logic back into the context
-- Unclear state-change triggers — be explicit about what causes transitions
-- Copy-paste errors — similar state classes make mistakes easy
+## State vs. Strategy Pattern
+Can be compared with the Strategy pattern as both use polymorphism for behavior.
 
-=== COMPARISON ===
-State can be compared with the Strategy pattern as both use polymorphism for behavior.
+| Aspect | State Pattern | Strategy Pattern |
+|--------|----------------|------------------|
+| **Purpose** | Encapsulate state and handle behavior based on internal state | Encapsulate interchangeable algorithms |
+| **Structure** | Interface/Abstract class defines behavior; each state is its own class | Interface/Abstract class defines the algorithm/behavior; each strategy is its own class |
+| **Transitions** | States know their next state and trigger transitions by telling context what its next state is | Strategies do not know about each other;No transitions between strategies |
+| **Awareness** | States coordinate with context | Strategies are independent |
+| **Behavior Change** | Dynamic behavior as context moves from state to state | Swapped at runtime by client, but strategies do not coordinate or transition themselves |
+| **Use Case** | State-dependent dynamic behavior | Let's you swap algorithm at runtime without them knowing the context that uses them, eg. checkout system, billing system |
 
-State Pattern:
-- Purpose: Encapsulate states and handle behavior changes based on the current state
-- Structure:
-  - Interface or abstract class defines the state behavior
-  - Each state is its own class
-- State awareness:
-  - States typically know what state they can transition to next
-  - This means one state can trigger transitions by telling the context what its next state is
-- Behavior:
-  - Behavior changes dynamically as the context moves from one state to another
-- Use case:
-  - When an object's behavior is determined by its internal state, and it must change at runtime
+**Key Differences:**
+- State manages transitions and context; Strategy focuses on algorithm interchange.
+- State encapsulates state logic; Strategy encapsulates algorithm logic.
+- Both use polymorphism but for different concerns.
 
-Strategy Pattern:
-- Purpose: Encapsulate interchangeable algorithms or behaviors
-- Structure:
-  - Interface or abstract class defines the algorithm (strategy) behavior
-  - Each strategy is its own class
-- State awareness:
-  - Strategies do not know about each other
-  - No transitions exist between strategies
-- Behavior:
-  - The algorithm can be swapped out at runtime, but strategies do not coordinate or transition themselves
-- Use case:
-  - When you want to choose or swap algorithms without the algorithm objects needing to know anything about the bigger context
+### Pitfalls
 
-=== SUMMARY ===
-Purpose
-- Reduces cyclomatic complexity by removing nested if/else logic
-- Makes adding new states easier and more structured
+1. **Increased Class Count**: More classes for each state causing state explosion as features increase.
+2. **Copy-Paste Errors**: Similar state classes can lead to mistakes.
+3. **Logic Leakage**: Avoid putting conditionals back in context which otherwise defeats the purpose.
+4. **Unclear Transitions**: Must define clear triggers for state changes.
+5. **State Definition**: Poorly defined states cause inconsistencies.
+6. **Overengineering**: Using State pattern for simple conditional logic adds unnecessary complexity.
+7. **Transition Coupling**: States may become tightly coupled if they directly create or reference each other. So, avoid hardcoding transition state instances. 
+    - eg. ctx.setState(new PublishedState()); [BAD]
+    - eg. ctx.transitionTo(StateType.PUBLISHED); [GOOD - let context handle the transition logic]
+8. **Hidden Control Flow**: Behavior is distributed across multiple state classes, hence require jumping between classes to understand flow, making it difficult to debug across states.
 
-Trade-offs / Pitfalls
-- Increases the total number of classes in a project
-- Prone to copy-paste errors because state classes often resemble each other
-- Requires careful identification of valid states and transitions
+### Summary
 
-Relationship to Strategy Pattern
-- Very similar in implementation (interface + multiple concrete classes)
-- State pattern handles transitions between states
-- Strategy pattern focuses on interchangeable algorithms with no knowledge of each other
+- Reduces cyclomatic complexity by eliminating conditional logic for states.
+- Makes adding states easier and more maintainable.
+- Increases class count but improves organization.
+- Prone to copy-paste errors because state classes often resemble each other.
+- Requires careful state identification and transition management.
+- Similar to Strategy but handles state transitions instead of interchangeable algorithms.

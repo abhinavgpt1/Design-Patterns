@@ -4,13 +4,18 @@ public class Fan {
     public static final FanState LOW_STATE = new FanLowState("LOW");
     public static final FanState MED_STATE = new FanMedState("MED");
 
-    FanState currentState;
+    private FanState currentState;
+
     public Fan() {
-        // this was the initialization by Bryan Hansen without making these fields static / final. I think these states should be static final as they are shared across all Fan instances.
+        // Bryan Hansen did following intialization without making states static final.
         // offState = new FanOffState();
         // lowState = new FanLowState();
         // medState = new FanMedState();
+        // My reason for static final: Since they are shared across all Fan instances, 
+        // it's good to have reusable singleton states.
 
+        // In future, if states require more context, then maybe we can initalise like
+        // offState = new FanOffState(this);
         currentState = OFF_STATE;
     }
 
