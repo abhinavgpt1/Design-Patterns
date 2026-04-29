@@ -19,5 +19,4 @@ public class DisplayPartsVisitor implements PartVisitor {
     public void visit(PartsOrder partOrder) {
         System.out.println("We have PartsOrder");
     }
-
 }

@@ -1,6 +1,7 @@
-// A simple change in Part interface needs to be reflected in all its sub-classes. Also, the PartOrder needs to be updated accordingly. 
-// Basically it ripples throughout, hence a problem.
-// What if the calculation logic / algo gets abstracted without changing Part_Bad, its subclasses and PartOrder class? -> comes Visitor Pattern
+// A simple change in Part interface needs to be reflected in all its sub-classes.
+// Also, the PartOrder needs to be updated accordingly. Basically it ripples throughout, hence a problem.
+// qq: What if the calculation logic/algo gets abstracted without changing Part_Bad its subclasses and PartOrder class? 
+// ans: Here comes the Visitor Pattern
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +33,11 @@ class EngineOil_Bad implements Part_Bad {
 
 class PartOrder {
     private List<Part_Bad> parts = new ArrayList<>();
+
     public void addPart(Part_Bad part) {
         parts.add(part);
     }
+
     public double calculateShippingCost() {
         double totalCost = 0;
         for (Part_Bad part : parts) {
@@ -43,7 +46,8 @@ class PartOrder {
         return totalCost;
     }
 }
-public class VisitorExample_Bad {
+
+public class Visitor_BadImpl {
     public static void main(String[] args) {
         PartOrder order = new PartOrder();
         order.addPart(new Wheel_Bad());
