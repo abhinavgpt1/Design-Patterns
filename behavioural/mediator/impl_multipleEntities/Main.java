@@ -23,8 +23,8 @@ public class Main {
         // Device in Switch, but that would be anti-pattern since Entities of Mediator
         // don't know about each other, and main purpose of Mediator is to decouple.
 
-        // Scalablity: Since switch can be singular, therefore problems like:
-        // 1. Multiple devices like Ac, Speaker
+        // Scalablity: Since switch can be singular, therefore for problems like:
+        // 1. Multiple devices like AC, Speaker
         // 2. Same device multiple times like lightKitchen, lightLivingRoom
         // you need to create new set of commands and actions
     }
